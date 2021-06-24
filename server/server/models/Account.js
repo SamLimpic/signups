@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
-export const Account = new Schema(
+export const AccountSchema = new Schema(
   {
     subs: [{ type: String, unique: true }],
     _id: { type: String, required: true },
