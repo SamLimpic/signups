@@ -1,9 +1,11 @@
 import mongoose from 'mongoose'
-import { Value as ValueSchema } from '../models/Value'
+import { Character as CharacterSchema } from '../models/Character'
+import { Game as GameSchema } from '../models/Game'
 import { AccountSchema } from '../models/Account'
 
 class DbContext {
-  Values = mongoose.model('Value', ValueSchema);
+  Characters = mongoose.model('Character', CharacterSchema);
+  Games = mongoose.model('Game', GameSchema);
   Account = mongoose.model('Account', AccountSchema);
 }
 

@@ -1,41 +1,19 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img
-          alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
-        />
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <router-link class="navbar-brand d-flex" :to="{ name: 'AccessTest' }">
+      <div class="align-items-center mr-auto">
+        <h1 class="d-md-block d-none text-light m-0 py-1">
+          <i class="fas fa-dragon text-warning mr-3"></i> The Dragon's Den
+        </h1>
+        <h1 class="d-md-none d-block m-0 py-1">
+          <i class="fas fa-dragon text-warning mr-3"></i>
+        </h1>
       </div>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon" />
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
-          </router-link>
-        </li>
-      </ul>
-      <span class="navbar-text">
+    <div class="navbar-collapse" id="navbarText">
+      <span class="navbar-text ml-auto">
         <button
-          class="btn btn-outline-primary text-uppercase"
+          class="btn btn-outline-light text-uppercase"
           @click="login"
           v-if="!user.isAuthenticated"
         >
@@ -53,13 +31,23 @@
               height="40"
               class="rounded"
             />
-            <span class="mx-3">{{ user.name }}</span>
+            <span class="mx-3 text-light">{{ account.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
+            <router-link :to="{ name: 'Admin' }">
+              <div class="list-group-item list-group-item-action hoverable" v-if="account.admin">
+                Admin
+              </div>
+            </router-link>
+            <router-link :to="{ name: 'DM' }">
+              <div class="list-group-item list-group-item-action hoverable" v-if="account.dm">
+                DM
+              </div>
+            </router-link>
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item list-group-item-action hoverable">
                 Account
@@ -69,7 +57,7 @@
               class="list-group-item list-group-item-action hoverable"
               @click="logout"
             >
-              logout
+              Logout
             </div>
           </div>
         </div>
@@ -91,6 +79,7 @@ export default {
     return {
       state,
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },

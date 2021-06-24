@@ -7,7 +7,9 @@
   </main>
   <footer>
     <div class="bg-dark text-light text-center p-4">
-      Made with 💖 by CodeWorks
+      <h4 class="m-0">
+        Made with <i class="fas fa-dice-d20 text-warning mx-1"></i> by Samwise
+      </h4>
     </div>
   </footer>
 </template>
