@@ -1,13 +1,12 @@
-
 {
   "folders": [
     {
-      "path": "signups.client",
-      "name": "client"
+      "path": "client",
+      "name": "Client"
     },
     {
-      "path": "signups",
-      "name": "server"
+      "path": "server",
+      "name": "Server"
     }
   ],
   "settings": {
