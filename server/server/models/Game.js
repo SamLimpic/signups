@@ -7,9 +7,13 @@ export const Game = new Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
+    length: { type: Number, required: true },
     experience: { type: Number, required: true },
     size: { type: Number, required: true },
-    players: { type: Array }
+    players: { type: Array },
+    live: { type: Boolean, default: false },
+    outdoor: { type: Boolean, default: false },
+    masked: { type: Boolean, default: false }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

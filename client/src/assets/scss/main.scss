@@ -25,13 +25,13 @@ main {
 
 @media (min-width: 0) {
   .font-xs {
-    font-size: 0.5rem;
-  }
-  .font-sm {
     font-size: 0.75rem;
   }
-  .font-md {
+  .font-sm {
     font-size: 1rem;
+  }
+  .font-md {
+    font-size: 1.25rem;
   }
   .font-lg {
     font-size: 1.5rem;
@@ -63,10 +63,10 @@ main {
     font-size: 1.25rem;
   }
   .font-lg {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
   .font-xl {
-    font-size: 2.25em;
+    font-size: 1.75em;
   }
   .font-xxl {
     font-size: 3.5em;
@@ -92,10 +92,10 @@ main {
     font-size: 1.5rem;
   }
   .font-lg {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
   .font-xl {
-    font-size: 2.5em;
+    font-size: 2em;
   }
   .font-xxl {
     font-size: 4em;
@@ -121,10 +121,10 @@ main {
     font-size: 1.75rem;
   }
   .font-lg {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
   .font-xl {
-    font-size: 2.75em;
+    font-size: 2.25em;
   }
   .font-xxl {
     font-size: 4.5em;
@@ -150,10 +150,10 @@ main {
     font-size: 2rem;
   }
   .font-lg {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
   .font-xl {
-    font-size: 3em;
+    font-size: 2.5em;
   }
   .font-xxl {
     font-size: 5em;

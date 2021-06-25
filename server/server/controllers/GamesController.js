@@ -36,6 +36,7 @@ export class GamesController extends BaseController {
   async createGame(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
+      req.body.live = true
       const data = await gamesService.createGame(req.body, req.userInfo.dm)
       res.send(data)
     } catch (error) {
