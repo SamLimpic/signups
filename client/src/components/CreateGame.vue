@@ -88,6 +88,7 @@
 <script>
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
+import { gamesService } from '../services/GamesService'
 import Notification from '../utils/Notification'
 
 export default {
@@ -100,6 +101,7 @@ export default {
   },
   setup() {
     const state = reactive({
+      account: computed(() => AppState.account),
       activeGame: computed(() => AppState.activeGame)
     })
     onMounted(async() => {
@@ -108,8 +110,12 @@ export default {
     return {
       state,
       addGame() {
-        Notification.toast('Your Game has been Saved!', 'success')
-        console.log(state.activeGame)
+        try {
+          gamesService.createGame(AppState.activeGame)
+          Notification.toast('Your Game has been Saved!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ', +error, 'error')
+        }
       }
     }
   },

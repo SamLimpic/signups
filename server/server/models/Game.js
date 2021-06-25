@@ -10,10 +10,10 @@ export const Game = new Schema(
     length: { type: Number, required: true },
     experience: { type: Number, required: true },
     size: { type: Number, required: true },
-    players: { type: Array },
     live: { type: Boolean, default: false },
     outdoor: { type: Boolean, default: false },
-    masked: { type: Boolean, default: false }
+    masked: { type: Boolean, default: false },
+    players: { type: Array }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
