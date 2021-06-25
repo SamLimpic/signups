@@ -23,12 +23,12 @@ const routes = [
     beforeEnter: authGuard
   },
   {
-    path: '/admin',
+    path: '/admin/:id',
     name: 'Admin',
     component: loadPage('AdminPage')
   },
   {
-    path: '/dm',
+    path: '/dm/:id',
     name: 'DM',
     component: loadPage('DMPage')
   },

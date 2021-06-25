@@ -28,17 +28,13 @@ class CharactersService {
     return character
   }
 
-  async killCharacter(id, dm, date) {
-    if (dm) {
-      const body = { dead: 'true', killDate: date }
-      const data = await dbContext.Characters.findOneAndUpdate({ _id: id }, body, { new: true })
-      if (!data) {
-        throw new BadRequest('Invalid Id')
-      }
-      return data
-    } else {
-      throw new BadRequest('Requires DM Permissions')
+  async killCharacter(id, date) {
+    const body = { dead: true, killDate: date }
+    const data = await dbContext.Characters.findOneAndUpdate({ _id: id }, body, { new: true })
+    if (!data) {
+      throw new BadRequest('Invalid Id')
     }
+    return data
   }
 }
 

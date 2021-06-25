@@ -16,36 +16,25 @@ class GamesService {
     return game
   }
 
-  async createGame(body, dm) {
-    if (dm) {
-      return await dbContext.Games.create(body)
-    } else {
-      throw new BadRequest('Requires DM Permissions')
-    }
+  async createGame(body) {
+    return await dbContext.Games.create(body)
   }
 
-  async editGame(body, dm) {
-    if (dm) {
-      const game = await dbContext.Games.findOneAndUpdate({ _id: body.id, creatorId: body.creatorId }, body, { new: true })
-      if (!game) {
-        throw new BadRequest('Invalid request')
-      }
-      return game
-    } else {
-      throw new BadRequest('Requires DM Permissions')
+  async editGame(body) {
+    const game = await dbContext.Games.findOneAndUpdate({ _id: body.id, creatorId: body.creatorId }, body, { new: true })
+    if (!game) {
+      throw new BadRequest('Invalid request')
     }
+    return game
   }
 
-  async delete(id, creatorId, dm) {
-    if (dm) {
-      const data = await dbContext.Games.findOneAndDelete({ _id: id, creatorId })
-      if (!data) {
-        throw new BadRequest('Invalid Id')
-      }
-      return 'Successfully Deleted'
-    } else {
-      throw new BadRequest('Requires DM Permissions')
+  async closeGame(id) {
+    const body = { live: false }
+    const data = await dbContext.Characters.findOneAndUpdate({ _id: id }, body, { new: true })
+    if (!data) {
+      throw new BadRequest('Invalid Id')
     }
+    return data
   }
 }
 

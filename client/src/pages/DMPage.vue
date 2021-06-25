@@ -1,6 +1,6 @@
 <template>
   <div class="dm home flex-grow-1 container-fluid align-items-center m-3">
-    <div class="row justify-content-around mt-3 mb-4" v-if="state.account.dm">
+    <div class="row justify-content-around mt-3 mb-4" v-if="state.account.dm && !state.loading">
       <div class="col-10 text-left">
         <h2 class="font-xl text-center">
           <u>Welcome {{ state.account.name }}!</u>
@@ -27,18 +27,27 @@
 
 <script>
 import { computed, onMounted, reactive } from '@vue/runtime-core'
+import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
+import { gamesService } from '../services/GamesService'
+import Notification from '../utils/Notification'
 
 export default {
   name: 'DM',
   setup() {
+    const route = useRoute()
     const state = reactive({
       account: computed(() => AppState.account),
       activeGame: computed(() => AppState.activeGame),
       loading: true
     })
     onMounted(async() => {
-
+      try {
+        await gamesService.getGamesByCreatorId(route.params.id)
+        state.loading = false
+      } catch (error) {
+        Notification.toast('Error: ', +error, 'error')
+      }
     })
     return {
       state

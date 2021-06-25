@@ -111,8 +111,17 @@ export default {
       state,
       addGame() {
         try {
-          gamesService.createGame(AppState.activeGame)
-          Notification.toast('Your Game has been Saved!', 'success')
+          if (state.account.dm) {
+            if (state.activeGame.id) {
+              gamesService.editGame(state.activeGame.id, state.activeGame)
+              Notification.toast('Your Game has been Edited!', 'success')
+            } else {
+              gamesService.createGame(state.activeGame)
+              Notification.toast('Your Game has been Saved!', 'success')
+            }
+          } else {
+            Notification.toast('Only DMs can create Games!', 'error')
+          }
         } catch (error) {
           Notification.toast('Error: ', +error, 'error')
         }

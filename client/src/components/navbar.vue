@@ -38,12 +38,12 @@
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
-            <router-link :to="{ name: 'Admin' }">
+            <router-link :to="{ name: 'Admin', params: { id:account.id } }">
               <div class="list-group-item list-group-item-action hoverable" v-if="account.admin">
                 Admin
               </div>
             </router-link>
-            <router-link :to="{ name: 'DM' }">
+            <router-link :to="{ name: 'DM', params: { id:account.id } }">
               <div class="list-group-item list-group-item-action hoverable" v-if="account.dm">
                 DM
               </div>

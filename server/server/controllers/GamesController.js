@@ -12,7 +12,7 @@ export class GamesController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createGame)
       .put('/:id', this.editGame)
-      .delete('/:id', this.deleteGame)
+      .delete('/:id', this.closeGame)
   }
 
   async getGames(req, res, next) {
@@ -37,7 +37,7 @@ export class GamesController extends BaseController {
     try {
       req.body.creatorId = req.userInfo.id
       req.body.live = true
-      const data = await gamesService.createGame(req.body, req.userInfo.dm)
+      const data = await gamesService.createGame(req.body)
       res.send(data)
     } catch (error) {
       next(error)
@@ -48,16 +48,16 @@ export class GamesController extends BaseController {
     try {
       req.body.creatorId = req.userInfo.id
       req.body.id = req.params.id
-      const data = await gamesService.editGame(req.body, req.userInfo.dm)
+      const data = await gamesService.editGame(req.body)
       return res.send(data)
     } catch (error) {
       next(error)
     }
   }
 
-  async deleteGame(req, res, next) {
+  async closeGame(req, res, next) {
     try {
-      const data = await gamesService.delete(req.params.id, req.userInfo.id, req.userInfo.dm)
+      const data = await gamesService.closeGame(req.params.id)
       return res.send(data)
     } catch (error) {
       next(error)
