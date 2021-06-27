@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 export const Character = new Schema(
   {
-    playerId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
+    creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
     name: { type: String, required: true },
     race: { type: String, required: true },
     class: { type: String, required: true },
@@ -14,8 +14,8 @@ export const Character = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
-Character.virtual('player', {
-  localField: 'playerId',
+Character.virtual('creator', {
+  localField: 'creatorId',
   ref: 'Account',
   foreignField: '_id',
   justOne: true

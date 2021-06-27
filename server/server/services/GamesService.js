@@ -4,12 +4,13 @@ import { BadRequest } from '../utils/Errors'
 class GamesService {
   async getGames(query) {
     const games = await dbContext.Games.find(query)
+      .populate('creator', 'name picture')
     return games
   }
 
   async getGameById(id) {
     const game = await dbContext.Games.findOne({ _id: id })
-      .populate('player', 'name picture')
+      .populate('creator', 'name picture')
     if (!game) {
       throw new BadRequest('Invalid Id')
     }

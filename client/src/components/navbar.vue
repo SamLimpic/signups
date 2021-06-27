@@ -1,19 +1,19 @@
 <template>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'AccessTest' }">
+    <router-link class="navbar-brand d-flex" aria-label="To HomePage" :to="{ name: 'Home' }">
       <div class="align-items-center mr-auto">
-        <h1 class="d-md-block d-none text-light m-0 py-1">
+        <h1 class="d-md-block d-none text-light font-lg m-0">
           <i class="fas fa-dragon text-warning mr-3"></i> The Dragon's Den
         </h1>
-        <h1 class="d-md-none d-block m-0 py-1">
+        <h1 class="d-md-none d-block m-0">
           <i class="fas fa-dragon text-warning mr-3"></i>
         </h1>
       </div>
     </router-link>
     <div class="navbar-collapse" id="navbarText">
-      <span class="navbar-text ml-auto">
+      <span class="navbar-text ml-auto pr-3">
         <button
-          class="btn btn-outline-light text-uppercase"
+          class="btn btn-lg btn-outline-light text-uppercase"
           @click="login"
           v-if="!user.isAuthenticated"
         >
@@ -25,16 +25,10 @@
             class="dropdown-toggle"
             @click="state.dropOpen = !state.dropOpen"
           >
-            <img
-              :src="user.picture"
-              alt="user photo"
-              height="40"
-              class="rounded"
-            />
-            <span class="mx-3 text-light">{{ account.name }}</span>
+            <span class="text-light font-md m-3">{{ account.name }}</span>
           </div>
           <div
-            class="dropdown-menu p-0 list-group w-100"
+            class="dropdown-menu p-0 list-group font-sm w-100"
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
@@ -113,4 +107,15 @@ a:hover {
 .nav-item .nav-link.router-link-exact-active{
   color: var(--primary);
 }
+
+  .font-sm {
+    font-size: 1rem;
+  }
+  .font-md {
+  font-size: 1.5rem;
+  }
+  .font-lg {
+  font-size: 2.5rem;
+  }
+
 </style>

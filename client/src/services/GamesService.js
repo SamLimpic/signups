@@ -2,6 +2,14 @@ import { AppState } from '../AppState'
 import { api } from './AxiosService'
 
 class GamesService {
+  async getGames() {
+    const res = await api.get('api/games?live=true')
+    AppState.games = res.data
+    for (let i = 0; i < AppState.games.length; i++) {
+      AppState.options.push(i)
+    }
+  }
+
   async getGameById(id) {
     const res = await api.get(`api/games/${id}`)
     AppState.activeGame = res.data
@@ -17,6 +25,9 @@ class GamesService {
   async createGame(data) {
     await api.post('api/games', data)
   }
+
+  // async setGames(data) {
+  // }
 
   async editGame(id, edit) {
     const res = await api.put(`api/games/${id}`, edit)
