@@ -43,20 +43,6 @@ function sanitizeBody(body) {
   return writable
 }
 
-function sanitizeCharacter(body) {
-  const writable = {
-    characters: [...body]
-  }
-  return writable
-}
-
-function sanitizeChoices(body) {
-  const writable = {
-    choices: body
-  }
-  return writable
-}
-
 class AccountService {
   /**
     * Returns a list user profiles from a query search of name or email likeness
@@ -111,26 +97,6 @@ class AccountService {
    */
   async updateAccount(user, body) {
     const update = sanitizeBody(body)
-    const account = await dbContext.Account.findOneAndUpdate(
-      { _id: user.id },
-      { $set: update },
-      { runValidators: true, setDefaultsOnInsert: true, new: true }
-    )
-    return account
-  }
-
-  async addCharacter(user, body) {
-    const update = sanitizeCharacter(body)
-    const account = await dbContext.Account.findOneAndUpdate(
-      { _id: user.id },
-      { $set: update },
-      { runValidators: true, setDefaultsOnInsert: true, new: true }
-    )
-    return account
-  }
-
-  async chooseGames(user, body) {
-    const update = sanitizeChoices(body)
     const account = await dbContext.Account.findOneAndUpdate(
       { _id: user.id },
       { $set: update },

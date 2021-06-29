@@ -1,5 +1,6 @@
 <template>
   <a class="dropdown-item font-sm bg-secondary text-light text-center py-1 pl-3 pr-3" @click="select(dropProp, gameProp)">Choice {{ dropProp + 1 }}</a>
+  <div class="dropdown-divider p-0 m-0"></div>
 </template>
 
 <script>
@@ -37,7 +38,7 @@ export default {
           AppState.count.choice++
           Notification.toast(`${game.title} is your #${num + 1} choice!`, 'success')
         } catch (error) {
-          Notification.toast('Error: ', +error, 'error')
+          Notification.toast('Error: ' + error, 'error')
         }
       }
     }

@@ -1,58 +1,19 @@
 <template>
-  <!-- ANCHOR Renders available Games -->
-  <div class="col-md-6 col-12 p-2">
-    <div class="row justify-content-between position-relative bg-secondary text-light rounded shadow m-2 p-sm-2 p-1">
-      <div class="col-lg-9 col-md-8 col-sm-10 col-9 text-left cover pt-2">
-        <h3 class="font-sm p-0 m-0">
-          [ {{ gameProp.size }} Players ]
-        </h3>
-        <h4 class="font-xl m-0">
-          <u>{{ gameProp.title }}</u>
-        </h4>
-        <h5 class="font-sm">
-          <i>By {{ gameProp.creator.name }}</i>
-        </h5>
-        <h6 class="font-md">
-          {{ gameProp.description }}
-        </h6>
-      </div>
-      <div class="icon text-right">
-        <p class="p-0 m-0" v-if="gameProp.live">
-          <span class="date-text font-sm">{{ gameProp.date.substring(5, 10) }} </span><i class="far fa-calendar-check font-xl text-primary pl-2"></i>
-        </p>
-        <p class="p-0 m-0" v-else>
-          <span class="past-date-text font-sm">{{ gameProp.date.substring(5, 10) }} </span><i class="far fa-calendar-times font-xl text-secondary pl-2"></i>
-        </p>
-        <p class="p-0 m-0">
-          <span class="week-text font-sm">{{ gameProp.length }} Week</span><i class="fas fa-history font-xl text-danger pl-2"></i>
-        </p>
-        <p class="p-0 m-0">
-          <span class="exp-text font-sm">{{ gameProp.experience }} EXP</span><i class="fas fa-star-half-alt font-xl text-success pl-2"></i>
-        </p>
-        <p class="p-0 m-0" v-if="gameProp.masked">
-          <span class="virus-text font-sm">Masked</span><i class="fas fa-virus font-xl text-info  pl-2"></i>
-        </p>
-        <p class="p-0 m-0" v-if="gameProp.outdoor">
-          <span class="sun-text font-sm">Outdoor</span><i class="fas fa-sun font-xl text-warning pl-2"></i>
-        </p>
-      </div>
-      <button type="button" class="btn btn-light text-dark" disabled>
-        Choice {{ indexProp + 1 }}
+  <!-- ANCHOR Renders available Characters -->
+  <div class="col-md-4 col-6 p-2">
+    <div class="bg-light rounded shadow text-left m-2">
+      <h3 class="font-xl m-0">
+        <u>{{ charProp.title }}</u>
+      </h3>
+      <h4 class="font-lg">
+        <i>The {{ charProp.race }} {{ charProp.class }}</i>
+      </h4>
+      <h3 class="font-md">
+        <i>Level {{ charProp.level }}</i>
+      </h3>
+      <button type="button" class="btn btn-primary font-xl ml-auto" @click="select(charProp)">
+        Select
       </button>
-      <!-- <div class="dropdown dropup">
-        <button :id="gameProp.id"
-                class="btn btn-primary font-sm dropdown-toggle"
-                type="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-        >
-          Order
-        </button>
-        <div class="dropdown-menu dropdown-menu-right m-0 p-0 mb-1" aria-labelledby="dropdownMenuButton">
-          <Dropdown v-for="d in state.choices" :key="d" :drop-prop="d" :game-prop="gameProp" />
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -60,27 +21,32 @@
 <script>
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
-// import { gamesService } from '../services/GamesService'
-// import Notification from '../utils/Notification'
 
 export default {
   name: 'CharacterList',
   props: {
-    characterProp: {
+    charProp: {
       type: Object,
       required: true
     }
   },
   setup() {
     const state = reactive({
-      account: computed(() => AppState.account),
-      options: computed(() => AppState.options)
+      account: computed(() => AppState.account)
     })
     onMounted(async() => {
 
     })
     return {
-      state
+      state,
+      select(character) {
+        try {
+          AppState.activeCharacter = character
+          Notification.toast(`You've selected ${character.name}, the ${character.race} ${character.class}!`, 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}
@@ -88,126 +54,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
-  position: absolute;
-  right: 1rem;
-  font-family: "Aladin", cursive;
-  font-weight:500;
-}
-.virus-text {
-  transition: all .5s ease-in-out;
-  opacity: .25;
-}
-.virus-text:hover {
-  color: var(--info);
-  opacity: 1;
-}
-.sun-text {
-  transition: all .5s ease-in-out;
-  opacity: .25;
-}
-.sun-text:hover {
-  color: var(--warning);
-  opacity: 1;
-}
-.exp-text {
-  transition: all .5s ease-in-out;
-  opacity: .25;
-}
-.exp-text:hover {
-  color: var(--success);
-  opacity: 1;
-}
-.week-text {
-  transition: all .5s ease-in-out;
-  opacity: .25;
-}
-.date-text:hover {
-  color: var(--primary);
-  opacity: 1;
-}
-.date-text {
-  transition: all .5s ease-in-out;
-  opacity: .25;
-}
-.past-date-text:hover {
-  color: var(--secondary);
-  opacity: 1;
-}
-.past-date-text {
-  transition: all .5s ease-in-out;
-  opacity: .25;
-}
-.week-text:hover {
-  color: var(--danger);
-  opacity: 1;
-}
-.dropdown {
-  position: absolute;
-  bottom: .75rem;
-  right: .75rem;
-}
-.dropdown-menu {
-    min-width: 3rem;
-}
+
 @media (min-width: 0) {
-p {
-  height: 1.75rem;
-}
-.icon {
-  top: -1.25rem;
-}
-.cover {
-  min-height: 11.5rem;
-}
+
 }
 
 @media (min-width: 576px) {
-p {
-  height: 2rem;
-}
-.icon {
-  top: -1.5rem;
-}
-.cover {
-  min-height: 13.5rem;
-}
+
 }
 
 @media (min-width: 768px) {
-p {
-  height: 2.25rem;
-}
-.icon {
-  top: -1.75rem;
-}
-.cover {
-  min-height: 15rem;
-}
+
 }
 
 @media (min-width: 992px) {
-p {
-  height: 2.5rem;
-}
-.icon {
-  top: -2rem;
-}
-.cover {
-  min-height: 16.5rem;
-}
+
 }
 
 @media (min-width: 1200px) {
-p {
-  height: 2.75rem;
-}
-.icon {
-  top: -2.25rem;
-}
-.cover {
-  min-height: 18rem;
-}
+
 }
 
 </style>

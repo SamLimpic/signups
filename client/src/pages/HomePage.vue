@@ -1,6 +1,14 @@
 <template>
   <div class="home flex-grow-1 container-fluid align-items-center m-3">
-    <div class="row justify-content-around">
+    <div class="row justify-content-around" v-if="state.loading">
+      <div class="col-12 text-center p-md-4 p-2">
+        <h2 class="font-xxl">
+          <u>Sneaking past the Dragon...</u>
+        </h2>
+        <i class="fas fa-dice-d20 text-warning fa-spin icon mt-3 mb-auto"></i>
+      </div>
+    </div>
+    <div class="row justify-content-around" v-else>
       <div class="col-lg-10 col-12 text-center p-md-4 p-2">
         <h2 class="font-xxl mb-3">
           <u>Welcome to the Dragon's Den!</u>
@@ -51,10 +59,11 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
-      user: computed(() => AppState.user)
+      user: computed(() => AppState.user),
+      loading: true
     })
     onMounted(async() => {
-
+      setTimeout(function() { state.loading = false }, 1000)
     })
     return {
       state,

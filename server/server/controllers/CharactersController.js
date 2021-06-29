@@ -1,6 +1,7 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { charactersService } from '../services/CharactersService'
+import { Experience } from '../models/Experience'
 
 export class CharactersController extends BaseController {
   constructor() {
@@ -48,6 +49,7 @@ export class CharactersController extends BaseController {
       req.body.creatorId = req.userInfo.id
       req.body.id = req.params.id
       req.body.experience = req.params.experience
+      req.body.level = req.params.level
       delete req.body.dead
       const data = await charactersService.editCharacter(req.body)
       return res.send(data)

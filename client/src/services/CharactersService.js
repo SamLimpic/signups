@@ -17,13 +17,13 @@ class CharactersService {
   }
 
   async getCharactersByCreatorId(id) {
-    const res = await api.get(`account/characters?creatorId=${id}`)
+    const res = await api.get(`api/characters?creatorId=${id}`)
     AppState.characters = res.data
   }
 
   async createCharacter(data) {
     const res = await api.post('api/characters', data)
-    await accountService.addCharacter(res.data)
+    AppState.activeCharacter = res.data
   }
 
   async editCharacter(id, edit) {

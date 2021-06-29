@@ -46,7 +46,7 @@ export default {
         await gamesService.getGamesByCreatorId(route.params.id)
         state.loading = false
       } catch (error) {
-        Notification.toast('Error: ', +error, 'error')
+        Notification.toast('Error: ' + error, 'error')
       }
     })
     return {

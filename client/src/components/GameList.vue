@@ -51,41 +51,12 @@
         </div>
       </div>
     </div>
-    <!-- <div class="position-relative pb-xl-3 pb-md-2 pb-sm-1">
-      <p class="exp p-0 m-0">
-        <i class="fas fa-star-half-alt font-xl text-success"></i><span class="exp-text font-md pl-2">{{ gameProp.experience }} EXP</span>
-      </p>
-      <p class="week p-0 m-0">
-        <span class="week-text font-md pr-2">{{ gameProp.length }} Week</span><i class="fas fa-history font-xl text-danger"></i>
-      </p>
-    </div>
-    <div class="mt-4 mb-3">
-      <h3 class="font-xl m-0">
-        <u>{{ gameProp.title }}</u>
-      </h3>
-      <h4 class="font-sm">
-        <i>By {{ gameProp.creator.name }}</i>
-      </h4>
-      <h5 class="font-md">
-        {{ gameProp.description }}
-      </h5>
-    </div>
-    <div class="position-relative pt-xl-3 pt-md-2 pt-sm-1">
-      <p class="virus p-0 m-0" v-if="gameProp.masked">
-        <i class="fas fa-virus font-xl text-info"></i><span class="virus-text font-md pl-2">Masked</span>
-      </p>
-      <p class="sun p-0 m-0" v-if="gameProp.outdoor">
-        <span class="sun-text font-md pr-2">Outdoors</span><i class="fas fa-sun font-xl text-warning"></i>
-      </p>
-    </div> -->
   </div>
 </template>
 
 <script>
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
-// import { gamesService } from '../services/GamesService'
-// import Notification from '../utils/Notification'
 
 export default {
   name: 'GameList',

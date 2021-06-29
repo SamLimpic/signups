@@ -3,30 +3,28 @@
     <div class="row justify-content-around" v-if="state.loading">
       <div class="col-12 text-center p-md-4 p-2">
         <h2 class="font-xxl">
-          <u>Sneaking past the Dragon...</u>
+          <u>Accessing Current Game Data</u>
         </h2>
         <i class="fas fa-dice-d20 text-warning fa-spin icon mt-3 mb-auto"></i>
       </div>
     </div>
-    <div class="row justify-content-around" v-else-if="!state.account.characters">
-      <div class="col-md-10 col-12 p-md-4 p-2">
-        <h2 class="font-xxl text-center">
+    <div class="row justify-content-around" v-else>
+      <div class="col-xl-8 col-lg-9 col-md-10 col-11 text-center p-md-4 p-2" v-if="!state.characters[0]">
+        <h2 class="font-xxl">
           <u>You don't have any characters to play with!</u>
         </h2>
-        <h3 class="font-lg mb-3">
+        <h3 class="font-xl mb-3">
           You'll have to register one before you can sign up...
         </h3>
         <CreateCharacter />
       </div>
-    </div>
-    <div class="row justify-content-around" v-else>
-      <div class="col-12" v-if="!state.activeCharacter">
+      <div class="col-12 p-md-4 p-2" v-else-if="!state.activeCharacter">
         <h2 class="font-xxl text-center">
           <u>Which character do you want to play as this week?</u>
         </h2>
-        <CharacterList v-for="c in state.account.characters" :key="c.id" :character-prop="c" />
+      <!-- <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" /> -->
       </div>
-      <div class="col-12" v-else-if="state.activeCharacter && state.games[0] && state.choice < state.games.length">
+      <div class="col-12 p-md-4 p-2" v-else-if="state.activeCharacter && state.games[0] && state.choice < state.games.length">
         <h2 class="font-xxl text-center m-0">
           <u>Here is this week's selection!</u>
         </h2>
@@ -34,7 +32,7 @@
           <GameList v-for="g in state.games" :key="g.id" :game-prop="g" />
         </div>
       </div>
-      <div class="col-12" v-else-if="state.choice === state.games.length">
+      <div class="col-12 p-md-4 p-2" v-else-if="state.choice === state.games.length">
         <h2 class="font-xxl text-center mb-4">
           <u>Confirm your selections to sign up this week!</u>
         </h2>
@@ -59,6 +57,7 @@ export default {
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
+      characters: computed(() => AppState.characters),
       games: computed(() => AppState.games),
       choice: computed(() => AppState.count.choice),
       loading: true
@@ -66,9 +65,9 @@ export default {
     onMounted(async() => {
       try {
         await gamesService.getGames()
-        state.loading = false
+        setTimeout(function() { state.loading = false }, 1000)
       } catch (error) {
-        Notification.toast('Error: ', +error, 'error')
+        Notification.toast('Error: ' + error, 'error')
       }
     })
     return {
@@ -78,7 +77,7 @@ export default {
           gamesService.setGames()
           Notification.toast('Your choices have been saved!', 'success')
         } catch (error) {
-          Notification.toast('Error: ', +error, 'error')
+          Notification.toast('Error: ' + error, 'error')
         }
       }
     }
