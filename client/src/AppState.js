@@ -7,6 +7,7 @@ export const AppState = reactive({
   // ANCHOR Base Objects
   user: {},
   account: {},
+  values: {},
   activeCharacter: {},
   activeGame: {},
 

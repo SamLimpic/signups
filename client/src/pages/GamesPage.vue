@@ -22,9 +22,9 @@
         <h2 class="font-xxl text-center">
           <u>Which character do you want to play as this week?</u>
         </h2>
-      <!-- <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" /> -->
+        <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" />
       </div>
-      <div class="col-12 p-md-4 p-2" v-else-if="state.activeCharacter && state.games[0] && state.choice < state.games.length">
+      <div class="col-12 p-md-4 p-2" v-else-if="state.games[0] && state.choice < state.games.length">
         <h2 class="font-xxl text-center m-0">
           <u>Here is this week's selection!</u>
         </h2>
@@ -58,6 +58,7 @@ export default {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       characters: computed(() => AppState.characters),
+      activeCharacter: computed(() => AppState.activeCharacter),
       games: computed(() => AppState.games),
       choice: computed(() => AppState.count.choice),
       loading: true

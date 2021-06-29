@@ -7,7 +7,7 @@ export const Character = new Schema(
     name: { type: String, required: true },
     race: { type: String, required: true },
     class: { type: String, required: true },
-    experience: { type: Number, required: true, default: 0 },
+    experience: { type: Number, required: true },
     level: { type: Number, required: true },
     imgUrl: { type: String, required: true, default: 'http://www.geocities.ws/Area51/Orion/3107/Lance21.jpg' },
     dead: { type: Boolean, required: true, default: false },

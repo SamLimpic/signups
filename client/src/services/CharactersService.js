@@ -1,14 +1,10 @@
 import { AppState } from '../AppState'
-import { accountService } from './AccountService'
 import { api } from './AxiosService'
 
 class CharactersService {
   async getCharacters() {
     const res = await api.get('api/characters')
     AppState.characters = res.data
-    for (let i = 0; i < AppState.characters.length; i++) {
-      AppState.options.push(i)
-    }
   }
 
   async getCharacterById(id) {
