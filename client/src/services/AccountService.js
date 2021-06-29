@@ -17,6 +17,17 @@ class AccountService {
     AppState.account = res.data
   }
 
+  async addCharacter(character) {
+    const res = await api.put('/account/characters', character)
+    AppState.account = res.data
+  }
+
+  async signup(bool) {
+    const body = { live: bool }
+    const res = await api.put('/account', body)
+    AppState.account = res.data
+  }
+
   // #region TIMESTAMP
   // async updateTimeStamp(edit) {
   //   const now = new Date()

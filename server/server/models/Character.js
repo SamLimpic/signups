@@ -9,7 +9,9 @@ export const Character = new Schema(
     class: { type: String, required: true },
     experience: { type: Number, required: true, default: 0 },
     dead: { type: Boolean, required: true, default: false },
-    killDate: { type: Date }
+    killDate: { type: Date },
+    games: { type: Array },
+    liveGames: { type: Array }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

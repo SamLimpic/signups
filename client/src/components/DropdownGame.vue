@@ -1,8 +1,5 @@
 <template>
-  <a class="dropdown-item font-sm py-1 pl-3 pr-2" @click="select(dropProp, gameProp)" v-if="dropProp === 0">{{ dropProp + 1 }}st Choice</a>
-  <a class="dropdown-item font-sm py-1 pl-3 pr-2" @click="select(dropProp, gameProp)" v-else-if="dropProp === 1">{{ dropProp + 1 }}nd Choice</a>
-  <a class="dropdown-item font-sm py-1 pl-3 pr-2" @click="select(dropProp, gameProp)" v-else-if="dropProp === 2">{{ dropProp + 1 }}rd Choice</a>
-  <a class="dropdown-item font-sm py-1 pl-3 pr-2" @click="select(dropProp, gameProp)" v-else>{{ dropProp + 1 }}th Choice</a>
+  <a class="dropdown-item font-sm bg-secondary text-light text-center py-1 pl-3 pr-3" @click="select(dropProp, gameProp)">Choice {{ dropProp + 1 }}</a>
 </template>
 
 <script>
@@ -11,7 +8,7 @@ import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 
 export default {
-  name: 'Dropdown',
+  name: 'GameDrop',
   props: {
     dropProp: {
       type: Number,

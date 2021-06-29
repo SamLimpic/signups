@@ -1,7 +1,7 @@
 <template>
   <!-- ANCHOR Renders available Games -->
   <div class="col-md-6 col-12 p-2">
-    <div class="row justify-content-between position-relative bg-light rounded shadow m-2 p-sm-2 p-1">
+    <div class="row justify-content-between position-relative bg-secondary text-light rounded shadow m-2 p-sm-2 p-1">
       <div class="col-lg-9 col-md-8 col-sm-10 col-9 text-left cover pt-2">
         <h3 class="font-sm p-0 m-0">
           [ {{ gameProp.size }} Players ]
@@ -36,7 +36,10 @@
           <span class="sun-text font-sm">Outdoor</span><i class="fas fa-sun font-xl text-warning pl-2"></i>
         </p>
       </div>
-      <div class="dropdown dropup">
+      <button type="button" class="btn btn-light text-dark" disabled>
+        Choice {{ indexProp + 1 }}
+      </button>
+      <!-- <div class="dropdown dropup">
         <button :id="gameProp.id"
                 class="btn btn-primary font-sm dropdown-toggle"
                 type="button"
@@ -47,37 +50,10 @@
           Order
         </button>
         <div class="dropdown-menu dropdown-menu-right m-0 p-0 mb-1" aria-labelledby="dropdownMenuButton">
-          <GameDrop v-for="d in state.options" :key="d" :drop-prop="d" :game-prop="gameProp" />
+          <Dropdown v-for="d in state.choices" :key="d" :drop-prop="d" :game-prop="gameProp" />
         </div>
-      </div>
+      </div> -->
     </div>
-    <!-- <div class="position-relative pb-xl-3 pb-md-2 pb-sm-1">
-      <p class="exp p-0 m-0">
-        <i class="fas fa-star-half-alt font-xl text-success"></i><span class="exp-text font-md pl-2">{{ gameProp.experience }} EXP</span>
-      </p>
-      <p class="week p-0 m-0">
-        <span class="week-text font-md pr-2">{{ gameProp.length }} Week</span><i class="fas fa-history font-xl text-danger"></i>
-      </p>
-    </div>
-    <div class="mt-4 mb-3">
-      <h3 class="font-xl m-0">
-        <u>{{ gameProp.title }}</u>
-      </h3>
-      <h4 class="font-sm">
-        <i>By {{ gameProp.creator.name }}</i>
-      </h4>
-      <h5 class="font-md">
-        {{ gameProp.description }}
-      </h5>
-    </div>
-    <div class="position-relative pt-xl-3 pt-md-2 pt-sm-1">
-      <p class="virus p-0 m-0" v-if="gameProp.masked">
-        <i class="fas fa-virus font-xl text-info"></i><span class="virus-text font-md pl-2">Masked</span>
-      </p>
-      <p class="sun p-0 m-0" v-if="gameProp.outdoor">
-        <span class="sun-text font-md pr-2">Outdoors</span><i class="fas fa-sun font-xl text-warning"></i>
-      </p>
-    </div> -->
   </div>
 </template>
 
@@ -88,9 +64,9 @@ import { AppState } from '../AppState'
 // import Notification from '../utils/Notification'
 
 export default {
-  name: 'GameList',
+  name: 'CharacterList',
   props: {
-    gameProp: {
+    characterProp: {
       type: Object,
       required: true
     }

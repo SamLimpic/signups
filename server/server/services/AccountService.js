@@ -37,7 +37,22 @@ async function mergeSubsIfNeeded(account, user) {
 function sanitizeBody(body) {
   const writable = {
     name: body.name,
-    picture: body.picture
+    picture: body.picture,
+    live: body.live
+  }
+  return writable
+}
+
+function sanitizeCharacter(body) {
+  const writable = {
+    characters: [...body]
+  }
+  return writable
+}
+
+function sanitizeChoices(body) {
+  const writable = {
+    choices: body
   }
   return writable
 }
@@ -96,6 +111,26 @@ class AccountService {
    */
   async updateAccount(user, body) {
     const update = sanitizeBody(body)
+    const account = await dbContext.Account.findOneAndUpdate(
+      { _id: user.id },
+      { $set: update },
+      { runValidators: true, setDefaultsOnInsert: true, new: true }
+    )
+    return account
+  }
+
+  async addCharacter(user, body) {
+    const update = sanitizeCharacter(body)
+    const account = await dbContext.Account.findOneAndUpdate(
+      { _id: user.id },
+      { $set: update },
+      { runValidators: true, setDefaultsOnInsert: true, new: true }
+    )
+    return account
+  }
+
+  async chooseGames(user, body) {
+    const update = sanitizeChoices(body)
     const account = await dbContext.Account.findOneAndUpdate(
       { _id: user.id },
       { $set: update },

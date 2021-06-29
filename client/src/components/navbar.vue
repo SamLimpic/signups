@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <router-link class="navbar-brand d-flex" aria-label="To HomePage" :to="{ name: 'Home' }">
       <div class="align-items-center mr-auto">
-        <h1 class="d-md-block d-none text-light font-lg m-0">
+        <h1 class="d-md-block d-none text-light font-lg m-0 py-1">
           <i class="fas fa-dragon text-warning mr-3"></i> The Dragon's Den
         </h1>
         <h1 class="d-md-none d-block m-0">

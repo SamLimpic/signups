@@ -10,7 +10,10 @@ export const AccountSchema = new Schema(
     picture: { type: String },
     // NOTE If you wish to add additional public properties for Accounts do so here
     admin: { type: Boolean, default: false },
-    dm: { type: Boolean, default: false }
+    dm: { type: Boolean, default: false },
+    live: { type: Boolean, default: false },
+    characters: { type: Array },
+    choices: { type: Array }
   },
   { timestamps: true, _id: false, toJSON: { virtuals: true } }
 )
