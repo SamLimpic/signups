@@ -5,7 +5,7 @@
       <h4 class="font-xxl mb-3">
         <u>Register {{ state.activeCharacter.name }}, the {{ state.activeCharacter.race }} {{ state.activeCharacter.class }}?</u>
       </h4>
-      <button type="button" class="btn btn-primary font-xl my-2" @click="createCharacter">
+      <button type="button" id="create" class="btn btn-primary font-xl my-2" @click="createCharacter">
         Confirm
       </button>
     </div>
@@ -104,8 +104,9 @@ export default {
       state,
       async createCharacter() {
         try {
+          document.getElementById('create').disabled = true
           await charactersService.createCharacter(AppState.activeCharacter)
-          Notification.toast(`${AppState.activeCharacter.name}, the ${AppState.activeCharacter.race} ${AppState.activeCharacter.class} has been registered!`, 'success', 'top-end', 1000)
+          Notification.toast(`${AppState.activeCharacter.name}, the ${AppState.activeCharacter.race} ${AppState.activeCharacter.class} has been registered!`, 'success')
           await charactersService.getCharactersByCreatorId(AppState.account.id)
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')

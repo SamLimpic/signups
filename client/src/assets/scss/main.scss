@@ -23,6 +23,10 @@ main {
   align-items: stretch;
 }
 
+.hoverable {
+  cursor: pointer;
+}
+
 @media (min-width: 0) {
   .font-xs {
     font-size: .85rem;
@@ -40,7 +44,7 @@ main {
     font-size: 1.25rem;
   }
   .font-xxl {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
   .text-shadow {
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
@@ -68,7 +72,7 @@ main {
     font-size: 1.5rem;
   }
   .font-xxl {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
   .text-shadow {
     text-shadow: -1.25px -1.25px 0 #000, 1.25px -1.25px 0 #000, -1.25px 1.25px 0 #000,
@@ -96,7 +100,7 @@ main {
     font-size: 1.75rem;
   }
   .font-xxl {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
   .text-shadow {
     text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000,

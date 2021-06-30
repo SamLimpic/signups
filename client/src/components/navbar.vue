@@ -13,7 +13,7 @@
     <div class="navbar-collapse" id="navbarText">
       <span class="navbar-text ml-auto pr-3">
         <button
-          class="btn btn-lg btn-outline-light text-uppercase"
+          class="btn btn-lg btn-outline-light text-uppercase py-2"
           @click="login"
           v-if="!user.isAuthenticated"
         >

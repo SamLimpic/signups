@@ -1,5 +1,5 @@
 <template>
-  <a class="dropdown-item font-sm bg-secondary text-light text-center py-1 px-lg-4 px-3" @click="select(dropProp, typeProp)">{{ dropProp }}</a>
+  <a class="dropdown-item font-sm bg-secondary text-light text-center hoverable py-1 px-lg-4 px-3" @click="select(dropProp, typeProp)">{{ dropProp }}</a>
   <div class="dropdown-divider p-0 m-0"></div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
           AppState.activeCharacter[type.toLowerCase()] = choice
           document.getElementById(type.toLowerCase()).innerText = choice
           document.getElementById(type.toLowerCase()).disabled = true
-          Notification.toast(`You've chosen ${choice} as your character's ${type}!`, 'success', 'top-end', 1000)
+          Notification.toast(`You've chosen ${choice} as your character's ${type}!`, 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

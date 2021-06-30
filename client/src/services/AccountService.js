@@ -18,8 +18,8 @@ class AccountService {
   }
 
   async signup(bool) {
-    const body = { live: bool }
-    const res = await api.put('/account', body)
+    AppState.account.live = bool
+    const res = await api.put('/account', AppState.account)
     AppState.account = res.data
   }
 

@@ -25,12 +25,7 @@
         <div class="form-group col-lg-7 col-sm-4 col-8 font-md">
           <label>Experience</label>
           <select class="form-control font-sm" v-model="state.activeGame.experience">
-            <option>250</option>
-            <option>300</option>
-            <option>350</option>
-            <option>400</option>
-            <option>450</option>
-            <option>500</option>
+            <ExperienceDrop v-for="e in state.experience" :key="e" :exp-prop="e" />
           </select>
         </div>
         <div class="form-group col-lg-5 col-sm-4 col-4 font-md">
@@ -61,12 +56,10 @@
           </div>
         </div>
         <div class="form-group col-lg-5 col-md-6 col-7 text-sm-right text-center mt-lg-auto pb-sm-2 mt-sm-3 mt-auto mb-2" v-if="state.activeGame.date">
-          <button type="button" class="btn btn-success font-xs w-100" @click="addGame">
+          <button type="button" class="btn btn-success font-xs w-100" @click="addGame" v-if="state.activeGame.date">
             CONFIRM
           </button>
-        </div>
-        <div class="form-group col-lg-5 col-md-6 col-7 text-sm-right text-center mt-lg-auto pb-sm-2 mt-sm-3 mt-auto mb-2" v-else>
-          <button type="button" class="btn btn-success font-xs w-100" disabled>
+          <button type="button" class="btn btn-success font-xs w-100" disabled v-else>
             CONFIRM
           </button>
         </div>
@@ -92,10 +85,20 @@ export default {
   setup() {
     const state = reactive({
       account: computed(() => AppState.account),
-      activeGame: computed(() => AppState.activeGame)
+      values: computed(() => AppState.values),
+      activeGame: computed(() => AppState.activeGame),
+      experience: []
     })
     onMounted(async() => {
-
+      try {
+        const min = state.values.expMin
+        const max = state.values.expMax
+        for (let i = min; i <= max; i += 50) {
+          state.experience.push(i)
+        }
+      } catch (error) {
+        Notification.toast('Error: ' + error, 'error')
+      }
     })
     return {
       state,

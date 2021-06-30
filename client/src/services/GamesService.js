@@ -5,11 +5,7 @@ import { api } from './AxiosService'
 class GamesService {
   async getGames() {
     const res = await api.get('api/games?live=true')
-    AppState.options = []
     AppState.games = res.data
-    for (let i = 0; i < AppState.games.length; i++) {
-      AppState.options.push(i)
-    }
   }
 
   async getGameById(id) {
@@ -27,9 +23,6 @@ class GamesService {
   async createGame(data) {
     await api.post('api/games', data)
   }
-
-  // async setGames(data) {
-  // }
 
   async editGame(id, edit) {
     const res = await api.put(`api/games/${id}`, edit)

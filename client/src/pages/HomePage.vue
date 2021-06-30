@@ -14,13 +14,17 @@
           <u>Welcome to the Dragon's Den!</u>
         </h2>
         <div class="shadow rounded bg-light text-center mx-4 px-lg-4 py-md-4 py-3 px-md-3 px-2">
-          <p class="font-xl mx-lg-2 mx-3">
-            The Dragon's Den is an interactive site for BattleMage D&D, designed to make signups as simple and easy as possible, both on our Players and Dungeon Masters!
+          <p class="font-xl m-2 mx-lg-3 mx-2">
+            This site was made for all of you loyal players, and designed to make signups for BattleMage D&D as simple and easy as possible!
           </p>
+          <p class="font-lg m-1 mx-lg-3 mx-2">
+            Everyone will have 24 hours to select their preferred games. Time is no longer a factor in selection, so you can sign up whenever it's most convenient for you!
+          </p>
+          <p class="font-md mx-lg-3 mx-2">
+            Check in every Saturday at 9AM to sign up!<br>Results will go live every Sunday at 9AM!
+          </p>
+          <h3><i class="fas fa-dragon text-warning icon"></i></h3>
           <div v-if="state.user.isAuthenticated">
-            <p class="font-lg mx-lg-2 mx-3">
-              Check back every Saturday at 10AM to sign up for the week's games.<br>Results will go live every Sunday!
-            </p>
             <router-link :to="{name: 'Games'}">
               <button type="button" class="btn btn-primary font-lg">
                 View this week's Games
@@ -28,9 +32,6 @@
             </router-link>
           </div>
           <div v-else>
-            <p class="font-lg mx-lg-2 mx-3">
-              Simply create your account and register your playable characters to get started!
-            </p>
             <button type="button" class="btn btn-primary font-lg" @click="login">
               Get Started!
             </button>
@@ -63,7 +64,7 @@ export default {
       loading: true
     })
     onMounted(async() => {
-      setTimeout(function() { state.loading = false }, 1000)
+      setTimeout(function() { state.loading = false }, 1500)
     })
     return {
       state,

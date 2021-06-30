@@ -1,15 +1,25 @@
 <template>
-  <div class="games flex-grow-1 container-fluid align-items-center m-3">
+  <div class="games flex-grow-1 container-fluid align-items-center text-center m-3">
     <div class="row justify-content-around" v-if="state.loading">
-      <div class="col-12 text-center p-md-4 p-2">
+      <div class="col-12 p-md-4 p-2">
         <h2 class="font-xxl">
           <u>Accessing Current Game Data</u>
         </h2>
         <i class="fas fa-dice-d20 text-warning fa-spin icon mt-3 mb-auto"></i>
       </div>
     </div>
+    <div class="row justify-content-around" v-else-if="state.account.live">
+      <div class="col-12 p-md-4 p-2">
+        <h2 class="font-xxl  m-0">
+          <u>Here are your signups for the week!</u>
+        </h2>
+        <div class="row justify-content-around">
+          <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" live-prop="true" />
+        </div>
+      </div>
+    </div>
     <div class="row justify-content-around" v-else>
-      <div class="col-xl-8 col-lg-9 col-md-10 col-11 text-center p-md-4 p-2" v-if="!state.characters[0]">
+      <div class="col-xl-8 col-lg-9 col-md-10 col-11 p-md-4 p-2" v-if="!state.characters[0]">
         <h2 class="font-xxl">
           <u>You don't have any characters to play with!</u>
         </h2>
@@ -18,22 +28,24 @@
         </h3>
         <CreateCharacter />
       </div>
-      <div class="col-12 p-md-4 p-2" v-else-if="!state.activeCharacter">
-        <h2 class="font-xxl text-center">
-          <u>Which character do you want to play as this week?</u>
+      <div class="col-12 p-md-4 p-2" v-else-if="!state.activeCharacter.id">
+        <h2 class="font-xxl m-0">
+          <u>Which character do you want to play this week?</u>
         </h2>
-        <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" />
+        <div class="row justify-content-around">
+          <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" />
+        </div>
       </div>
-      <div class="col-12 p-md-4 p-2" v-else-if="state.games[0] && state.choice < state.games.length">
-        <h2 class="font-xxl text-center m-0">
+      <div class="col-12 p-md-4 p-2" v-else-if="state.choice < state.games.length">
+        <h2 class="font-xxl  m-0">
           <u>Here is this week's selection!</u>
         </h2>
         <div class="row justify-content-around">
           <GameList v-for="g in state.games" :key="g.id" :game-prop="g" />
         </div>
       </div>
-      <div class="col-12 p-md-4 p-2" v-else-if="state.choice === state.games.length">
-        <h2 class="font-xxl text-center mb-4">
+      <div class="col-12 p-md-4 p-2" v-else>
+        <h2 class="font-xxl mb-4">
           <u>Confirm your selections to sign up this week!</u>
         </h2>
         <h3><i class="fas fa-dragon text-warning icon"></i></h3>
@@ -49,7 +61,9 @@
 import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { gamesService } from '../services/GamesService'
+import { charactersService } from '../services/CharactersService'
 import Notification from '../utils/Notification'
+import { accountService } from '../services/AccountService'
 
 export default {
   name: 'Games',
@@ -75,7 +89,8 @@ export default {
       state,
       confirm() {
         try {
-          gamesService.setGames()
+          charactersService.setGames()
+          accountService.signup(true)
           Notification.toast('Your choices have been saved!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')

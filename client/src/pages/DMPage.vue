@@ -31,6 +31,7 @@ import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
 import { gamesService } from '../services/GamesService'
 import Notification from '../utils/Notification'
+import { valuesService } from '../services/ValuesService'
 
 export default {
   name: 'DM',
@@ -44,6 +45,7 @@ export default {
     onMounted(async() => {
       try {
         await gamesService.getGamesByCreatorId(route.params.id)
+        await valuesService.getValues()
         state.loading = false
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')

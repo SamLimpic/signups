@@ -36,20 +36,12 @@
           <span class="sun-text font-sm">Outdoor</span><i class="fas fa-sun font-xl text-warning pl-2"></i>
         </p>
       </div>
-      <div class="dropdown dropup">
-        <button :id="gameProp.id"
-                class="btn btn-primary font-sm dropdown-toggle"
-                type="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-        >
-          Order
-        </button>
-        <div class="dropdown-menu dropdown-menu-right m-0 p-0 mb-1" aria-labelledby="dropdownMenuButton">
-          <GameDrop v-for="d in state.options" :key="d" :drop-prop="d" :game-prop="gameProp" />
-        </div>
-      </div>
+      <button type="button" class="select btn btn-primary font-md py-0" disabled v-if="liveProp">
+        Choice {{ indexProp }}
+      </button>
+      <button type="button" :id="gameProp.id" class="select btn btn-primary font-md py-0" @click="select(state.choice, gameProp)" v-else>
+        Select
+      </button>
     </div>
   </div>
 </template>
@@ -57,6 +49,7 @@
 <script>
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
+import Notification from '../utils/Notification'
 
 export default {
   name: 'GameList',
@@ -64,18 +57,37 @@ export default {
     gameProp: {
       type: Object,
       required: true
+    },
+    indexProp: {
+      type: Number,
+      default: 0
+    },
+    liveProp: {
+      type: Boolean,
+      default: false
     }
   },
   setup() {
     const state = reactive({
       account: computed(() => AppState.account),
-      options: computed(() => AppState.options)
+      choice: computed(() => AppState.count.choice)
     })
     onMounted(async() => {
 
     })
     return {
-      state
+      state,
+      select(num, game) {
+        try {
+          AppState.choices.push(game)
+          document.getElementById(`${game.id}`).innerText = `Choice ${num + 1}`
+          document.getElementById(`${game.id}`).disabled = true
+          AppState.count.choice++
+          Notification.toast(`${game.title} is your #${num + 1} choice!`, 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}
@@ -137,7 +149,7 @@ export default {
   color: var(--danger);
   opacity: 1;
 }
-.dropdown {
+.select {
   position: absolute;
   bottom: .75rem;
   right: .75rem;
@@ -165,7 +177,7 @@ p {
   top: -1.5rem;
 }
 .cover {
-  min-height: 13.5rem;
+  min-height: 12.75rem;
 }
 }
 
@@ -177,7 +189,7 @@ p {
   top: -1.75rem;
 }
 .cover {
-  min-height: 15rem;
+  min-height: 14.25rem;
 }
 }
 
@@ -189,7 +201,7 @@ p {
   top: -2rem;
 }
 .cover {
-  min-height: 16.5rem;
+  min-height: 15.75rem;
 }
 }
 
@@ -201,7 +213,7 @@ p {
   top: -2.25rem;
 }
 .cover {
-  min-height: 18rem;
+  min-height: 17.5rem;
 }
 }
 

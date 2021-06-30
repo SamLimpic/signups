@@ -21,7 +21,7 @@ class CharactersService {
   }
 
   async editCharacter(body) {
-    const character = await dbContext.Characters.findOneAndUpdate({ _id: body.id, creatorId: body.creatorId, experience: body.experience, level: body.level, dead: false }, body, { new: true })
+    const character = await dbContext.Characters.findOneAndUpdate({ _id: body.id, dead: false }, body, { new: true })
     if (!character) {
       throw new BadRequest('Invalid request')
     }

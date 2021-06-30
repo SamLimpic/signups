@@ -1,7 +1,6 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { charactersService } from '../services/CharactersService'
-import { valuesService } from '../services/ValuesService'
 
 export class CharactersController extends BaseController {
   constructor() {
@@ -36,10 +35,7 @@ export class CharactersController extends BaseController {
 
   async createCharacter(req, res, next) {
     try {
-      const expValues = await valuesService.getValues()
       req.body.creatorId = req.userInfo.id
-      req.body.experience = expValues.expBase
-      this.setLevel(req.body.experience, req.body.level)
       const data = await charactersService.createCharacter(req.body)
       res.send(data)
     } catch (error) {
@@ -53,7 +49,6 @@ export class CharactersController extends BaseController {
       req.body.id = req.params.id
       req.body.experience = req.params.experience
       req.body.level = req.params.level
-      this.setLevel(req.body.experience, req.body.level)
       delete req.body.dead
       const data = await charactersService.editCharacter(req.body)
       return res.send(data)
@@ -68,71 +63,6 @@ export class CharactersController extends BaseController {
       return res.send(data)
     } catch (error) {
       next(error)
-    }
-  }
-
-  setLevel(exp, level) {
-    switch (exp) {
-      case exp >= 355000:
-        level = 20
-        return level
-      case exp >= 305000:
-        level = 19
-        return level
-      case exp >= 265000:
-        level = 18
-        return level
-      case exp >= 225000:
-        level = 17
-        return level
-      case exp >= 195000:
-        level = 16
-        return level
-      case exp >= 165000:
-        level = 15
-        return level
-      case exp >= 140000:
-        level = 14
-        return level
-      case exp >= 120000:
-        level = 13
-        return level
-      case exp >= 100000:
-        level = 12
-        return level
-      case exp >= 85000:
-        level = 11
-        return level
-      case exp >= 64000:
-        level = 10
-        return level
-      case exp >= 48000:
-        level = 9
-        return level
-      case exp >= 34000:
-        level = 8
-        return level
-      case exp >= 23000:
-        level = 7
-        return level
-      case exp >= 14000:
-        level = 6
-        return level
-      case exp >= 6500:
-        level = 5
-        return level
-      case exp >= 2700:
-        level = 4
-        return level
-      case exp >= 900:
-        level = 3
-        return level
-      case exp >= 300:
-        level = 2
-        return level
-      default:
-        level = 1
-        return level
     }
   }
 }

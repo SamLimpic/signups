@@ -1,13 +1,10 @@
 import BaseController from '../utils/BaseController'
-import { Auth0Provider } from '@bcwdev/auth0provider'
 import { valuesService } from '../services/ValuesService'
 
 export class ValuesController extends BaseController {
   constructor() {
     super('api/values')
     this.router
-      .use(Auth0Provider.getAuthorizedUserInfo)
-    // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .get('', this.getValues)
       .put('/:id', this.editValue)
   }

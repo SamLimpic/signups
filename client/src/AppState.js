@@ -14,7 +14,6 @@ export const AppState = reactive({
   // ANCHOR Base Arrays
   characters: [],
   games: [],
-  options: [],
   choices: [],
 
   // ANCHOR Dictionaries
