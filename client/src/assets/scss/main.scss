@@ -27,6 +27,13 @@ main {
   cursor: pointer;
 }
 
+.b-line {
+  border-bottom-width: 3px;
+  border-bottom-color: var(--dark);
+  border-bottom-style: solid;
+  opacity: .5;
+}
+
 @media (min-width: 0) {
   .font-xs {
     font-size: .9rem;

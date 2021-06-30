@@ -9,20 +9,20 @@
       </div>
     </div>
     <div class="row justify-content-around" v-else>
-      <div class="col-lg-9 col-md-10 col-sm-11 col-12 text-center p-md-3 py-1">
+      <div class="col-12 text-center p-md-3 py-1">
         <h2 class="font-xxl mb-3">
           <u>Welcome to the Dragon's Den!</u>
         </h2>
-        <div class="shadow rounded bg-light text-center py-3 px-4 my-2 mx-3">
+        <div class="shadow rounded bg-light text-center py-3 px-4 my-2">
           <p class="font-xl mb-2">
-            The Dragon's Den was made for all of you loyal players, designed to make signups for BattleMage D&D as simple and easy as possible!
+            The Dragon's Den was designed to make signups for BattleMage D&D as simple and easy as possible for everyone!
           </p>
-          <h3><i class="fas fa-dragon text-warning icon my-2"></i></h3>
+          <h3><i class="fas fa-dungeon text-warning icon my-2"></i></h3>
           <p class="font-lg my-2">
-            Everyone will have 24 hours to select their preferred games before the week's roster is decided, so you can sign up whenever is most convenient for you!
+            All players will have 24 hours to select their preferred games, so take your time and sign up whenever it's most convenient for you.
           </p>
           <p class="font-lg">
-            Log in every Saturday at 10AM to sign up! Results will go live every Sunday at 10AM!
+            Log in every Saturday at 10AM to sign up, and results will go live every Sunday!
           </p>
           <div v-if="state.user.isAuthenticated">
             <router-link :to="{name: 'Games'}">

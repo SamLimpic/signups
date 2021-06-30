@@ -1,16 +1,17 @@
 <template>
   <!-- ANCHOR Renders available Games -->
-  <div class="col-lg-2 col-md-4 col-sm-6 p-lg-2 px-4 py-2">
+  <div class="col-md-4 col-sm-6 px-4 py-2">
     <div class="row justify-content-between position-relative bg-light rounded shadow h-100 p-sm-2 p-1">
       <div class="col-12 text-left cover pt-2">
         <p class="p-0 m-0 pb-2">
-          <i class="far fa-calendar-check font-xl text-primary pr-2"></i><span class="date-text font-sm">{{ gameProp.date.substring(5, 10) }} </span>
+          <i class="far fa-calendar-check font-lg text-primary pr-2"></i><span class="date-text font-sm">{{ gameProp.date.substring(5, 10) }} </span>
         </p>
         <h4 class="font-xl m-0">
-          <u>{{ gameProp.title }}</u>
+          {{ gameProp.title }}
         </h4>
+        <div class="b-line m-1 mb-2"></div>
         <h5 class="font-md">
-          <i>By {{ gameProp.creator.name }}</i>
+          <i>{{ gameProp.description }}</i>
         </h5>
       </div>
       <div class="select">
@@ -61,13 +62,9 @@ export default {
   width: 2.5rem;
   font-size: 1.25rem;
 }
-.date-text:hover {
-  color: var(--primary);
-  opacity: 1;
-}
 .date-text {
-  transition: all .5s ease-in-out;
-  opacity: .25;
+  color: var(--primary);
+  opacity: .75;
 }
 @media (min-width: 0) {
 .btn {

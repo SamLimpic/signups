@@ -2,10 +2,10 @@
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <router-link class="navbar-brand d-flex" aria-label="To HomePage" :to="{ name: 'Home' }">
       <div class="align-items-center mr-auto">
-        <h1 class="d-md-block d-none text-light font-lg m-0 py-1">
+        <h1 class="d-sm-block d-none text-light font-lg m-0">
           <i class="fas fa-dragon text-warning mr-3"></i> The Dragon's Den
         </h1>
-        <h1 class="d-md-none d-block m-0">
+        <h1 class="d-sm-none d-block m-0">
           <i class="fas fa-dragon text-warning mr-3"></i>
         </h1>
       </div>
@@ -25,7 +25,7 @@
             class="dropdown-toggle"
             @click="state.dropOpen = !state.dropOpen"
           >
-            <span class="text-light font-md m-3">{{ account.name }}</span>
+            <span class="text-light font-sm m-3">{{ account.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group font-sm w-100"
@@ -109,7 +109,7 @@ a:hover {
 }
 
   .font-sm {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
   .font-md {
   font-size: 1.5rem;

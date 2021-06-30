@@ -17,8 +17,8 @@ export default class Notification {
         text: text,
         icon: icon,
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#4f6031',
+        cancelButtonColor: '#8b2f15',
         confirmButtonText: confirmButtonText
       })
       if (res.isConfirmed) {
@@ -40,7 +40,7 @@ export default class Notification {
  * -----------------------------------
  * {@link https://sweetalert2.github.io/#configuration|Check out Sweet Alerts}
  */
-  static toast(title = 'Warning!', display = 'warning', position = 'top-end', timer = 1000, progressBar = true) {
+  static toast(title = 'Warning!', display = 'warning', position = 'top-end', timer = 1000, progressBar = false) {
     Swal.fire({
       title: title,
       icon: display,
@@ -48,7 +48,14 @@ export default class Notification {
       timer: timer,
       timerProgressBar: progressBar,
       toast: true,
-      showConfirmButton: false
+      showConfirmButton: false,
+      showClass: {
+        popup: 'animated fadeInDown faster',
+        icon: 'animated heartBeat delay-1s'
+      },
+      hideClass: {
+        popup: 'animated fadeOutUp faster'
+      }
     })
   }
 }
