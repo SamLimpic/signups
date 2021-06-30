@@ -29,16 +29,16 @@ main {
 
 @media (min-width: 0) {
   .font-xs {
-    font-size: .85rem;
-  }
-  .font-sm {
     font-size: .9rem;
   }
+  .font-sm {
+    font-size: 1rem;
+  }
   .font-md {
-  font-size: .95rem;
+  font-size: 1.05rem;
   }
   .font-lg {
-  font-size: 1rem;
+  font-size: 1.1rem;
   }
   .font-xl {
     font-size: 1.25rem;

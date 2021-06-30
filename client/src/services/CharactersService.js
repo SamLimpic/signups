@@ -48,10 +48,9 @@ class CharactersService {
     AppState.characters = AppState.characters.filter(g => g.id !== id)
   }
 
-  async setGames() {
-    const char = AppState.activeCharacter
-    char.liveGames = AppState.choices
-    this.editCharacter(AppState.activeCharacter)
+  async setGames(character) {
+    character.liveGames = AppState.choices
+    this.editCharacter(character)
   }
 
   setLevel(exp) {

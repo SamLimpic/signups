@@ -47,8 +47,6 @@ export class CharactersController extends BaseController {
     try {
       req.body.creatorId = req.userInfo.id
       req.body.id = req.params.id
-      req.body.experience = req.params.experience
-      req.body.level = req.params.level
       delete req.body.dead
       const data = await charactersService.editCharacter(req.body)
       return res.send(data)

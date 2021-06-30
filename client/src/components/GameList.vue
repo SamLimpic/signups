@@ -16,7 +16,7 @@
           {{ gameProp.description }}
         </h6>
       </div>
-      <div class="icon text-right">
+      <div class="icons text-right">
         <p class="p-0 m-0" v-if="gameProp.live">
           <span class="date-text font-sm">{{ gameProp.date.substring(5, 10) }} </span><i class="far fa-calendar-check font-xl text-primary pl-2"></i>
         </p>
@@ -30,10 +30,10 @@
           <span class="exp-text font-sm">{{ gameProp.experience }} EXP</span><i class="fas fa-star-half-alt font-xl text-success pl-2"></i>
         </p>
         <p class="p-0 m-0" v-if="gameProp.masked">
-          <span class="virus-text font-sm">Masked</span><i class="fas fa-virus font-xl text-info  pl-2"></i>
+          <span class="virus-text font-sm">Masked</span><i class="fas fa-shield-virus font-xl text-info  pl-2"></i>
         </p>
         <p class="p-0 m-0" v-if="gameProp.outdoor">
-          <span class="sun-text font-sm">Outdoor</span><i class="fas fa-sun font-xl text-warning pl-2"></i>
+          <span class="sun-text font-sm">Outdoor</span><i class="fa fa-sun font-xl text-warning pl-2"></i>
         </p>
       </div>
       <button type="button" class="select btn btn-primary font-md py-0" disabled v-if="liveProp">
@@ -95,9 +95,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
+.icons {
   position: absolute;
   right: 1rem;
+  top: .75rem;
   font-family: "Aladin", cursive;
   font-weight:500;
 }
@@ -159,61 +160,46 @@ export default {
 }
 @media (min-width: 0) {
 p {
-  height: 1.75rem;
-}
-.icon {
-  top: -1.25rem;
+  height: 2rem;
 }
 .cover {
-  min-height: 11.5rem;
+  min-height: 13rem;
 }
 }
 
 @media (min-width: 576px) {
 p {
-  height: 2rem;
-}
-.icon {
-  top: -1.5rem;
+  height: 2.25rem;
 }
 .cover {
-  min-height: 12.75rem;
+  min-height: 14rem;
 }
 }
 
 @media (min-width: 768px) {
 p {
-  height: 2.25rem;
-}
-.icon {
-  top: -1.75rem;
+  height: 2.5rem;
 }
 .cover {
-  min-height: 14.25rem;
+  min-height: 15.5rem;
 }
 }
 
 @media (min-width: 992px) {
 p {
-  height: 2.5rem;
-}
-.icon {
-  top: -2rem;
+  height: 2.75rem;
 }
 .cover {
-  min-height: 15.75rem;
+  min-height: 17rem;
 }
 }
 
 @media (min-width: 1200px) {
 p {
-  height: 2.75rem;
-}
-.icon {
-  top: -2.25rem;
+  height: 3rem;
 }
 .cover {
-  min-height: 17.5rem;
+  min-height: 18.75rem;
 }
 }
 
