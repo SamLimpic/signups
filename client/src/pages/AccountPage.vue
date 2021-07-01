@@ -55,9 +55,11 @@ export default {
       try {
         await charactersService.getCharactersByCreatorId(route.params.id)
         await charactersService.getGraveyardByCreatorId(route.params.id)
-        AppState.graveyard.forEach(c => {
-          AppState.characters.push(c)
-        })
+        if (state.graveyard[0]) {
+          AppState.graveyard.forEach(c => {
+            AppState.characters.push(c)
+          })
+        }
         setTimeout(function() { state.loading = false; AppState.profile = true }, 1000)
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
