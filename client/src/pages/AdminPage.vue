@@ -1,5 +1,5 @@
 <template>
-  <div class="admin flex-grow-1 d-flex flex-column align-items-center mt-5">
+  <div class="admin flex-grow-1 d-flex flex-column align-items-center mt-3 mx-4 mb-4">
     <div class="row justify-content-around" v-if="state.account.dm">
       <div class="col-12 text-center">
         <h2 class="font-xxl">

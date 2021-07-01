@@ -13,13 +13,15 @@
     <div class="navbar-collapse" id="navbarText">
       <span class="navbar-text ml-auto pr-3">
         <button
-          class="btn btn-lg btn-outline-light text-uppercase py-2"
+          class="btn btn-lg btn-outline-light text-uppercase py-1"
           @click="login"
           v-if="!user.isAuthenticated"
         >
           Login
         </button>
-
+        <button type="button" class="btn btn-outline-light font-sm" v-else-if="profile" @click="edit">
+          Edit Account
+        </button>
         <div class="dropdown" v-else>
           <div
             class="dropdown-toggle"
@@ -42,7 +44,7 @@
                 DM
               </div>
             </router-link>
-            <router-link :to="{ name: 'Account' }">
+            <router-link :to="{ name: 'Account', params: { id:account.id } }">
               <div class="list-group-item list-group-item-action hoverable">
                 Account
               </div>
@@ -55,6 +57,7 @@
             </div>
           </div>
         </div>
+
       </span>
     </div>
   </nav>
@@ -64,6 +67,9 @@
 import { AuthService } from '../services/AuthService'
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
+import Notification from '../utils/Notification'
+import { accountService } from '../services/AccountService'
+
 export default {
   name: 'Navbar',
   setup() {
@@ -74,11 +80,20 @@ export default {
       state,
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
+      profile: computed(() => AppState.profile),
       async login() {
         AuthService.loginWithPopup()
       },
       async logout() {
         AuthService.logout({ returnTo: window.location.origin })
+      },
+      async edit() {
+        const name = AppState.account.name
+        await Notification.username()
+        if (AppState.account.name !== name) {
+          await accountService.editAccount(AppState.account)
+          Notification.toast('Your username has been successfully changed!', 'success')
+        }
       }
     }
   }

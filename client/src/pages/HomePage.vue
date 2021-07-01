@@ -1,5 +1,5 @@
 <template>
-  <div class="home flex-grow-1 container-fluid align-items-center m-md-3 my-4 m-2">
+  <div class="home flex-grow-1 container-fluid align-items-center mt-3 mx-4 mb-4">
     <div class="row justify-content-around" v-if="state.loading">
       <div class="col-12 text-center p-md-3 py-1">
         <h2 class="font-xxl">
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="row justify-content-around" v-else>
-      <div class="col-12 text-center p-md-3 py-1">
+      <div class="col-12 text-center p-md-3 px-2 pt-1">
         <h2 class="font-xxl mb-3">
           <u>Welcome to the Dragon's Den!</u>
         </h2>
@@ -38,15 +38,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-12 text-center">
-        <h2 class="font-xxl text-center mb-4">
-          <u>Welcome to the Dragon's Den!</u>
-        </h2>
-        <h3><i class="fas fa-dragon text-warning icon"></i></h3>
-        <button type="button" class="btn btn-primary font-xl mt-3" @click="confirm">
-          Confirm
-        </button>
-      </div> -->
     </div>
   </div>
 </template>

@@ -57,7 +57,7 @@ export class CharactersController extends BaseController {
 
   async killCharacter(req, res, next) {
     try {
-      const data = await charactersService.killCharacter(req.params.id, req.date)
+      const data = await charactersService.killCharacter(req.params.id, req.body.games[-1].date)
       return res.send(data)
     } catch (error) {
       next(error)

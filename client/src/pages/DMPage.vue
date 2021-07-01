@@ -1,5 +1,5 @@
 <template>
-  <div class="dm flex-grow-1 container-fluid align-items-center m-3">
+  <div class="dm flex-grow-1 container-fluid align-items-center mt-3 mx-4 mb-4">
     <div class="row justify-content-around mt-3 mb-4" v-if="state.account.dm && !state.loading">
       <div class="col-10 text-left">
         <h2 class="font-xxl text-center">

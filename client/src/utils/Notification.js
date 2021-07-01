@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import { AppState } from '../AppState'
 
 export default class Notification {
   /**
@@ -57,5 +58,38 @@ export default class Notification {
         popup: 'animated fadeOutUp faster'
       }
     })
+  }
+
+  static async username(username = AppState.account.name) {
+    const { value: name } = await Swal.fire({
+      icon: 'info',
+      title: 'Customize your Username',
+      input: 'text',
+      inputPlaceholder: username
+    })
+    if (name) {
+      AppState.account.name = name
+    }
+  }
+
+  static async character(username = AppState.activeCharacter.name) {
+    const { value: name } = await Swal.fire({
+      icon: 'question',
+      title: "What is your character's name?",
+      input: 'text',
+      inputPlaceholder: username
+    })
+    if (name) {
+      AppState.activeCharacter.name = name
+      const { value: imgUrl } = await Swal.fire({
+        icon: 'question',
+        title: 'What does your character look like?',
+        input: 'text',
+        inputPlaceholder: 'Paste the URL of your preferred image'
+      })
+      if (imgUrl) {
+        AppState.activeCharacter.imgUrl = imgUrl
+      }
+    }
   }
 }

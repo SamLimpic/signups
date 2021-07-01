@@ -3,6 +3,7 @@ import { reactive } from 'vue'
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
   // ANCHOR Base Variables
+  profile: false,
 
   // ANCHOR Base Objects
   user: {},
@@ -15,6 +16,7 @@ export const AppState = reactive({
   characters: [],
   games: [],
   choices: [],
+  graveyard: [],
 
   // ANCHOR Dictionaries
   count: {

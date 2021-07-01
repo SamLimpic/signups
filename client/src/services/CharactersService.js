@@ -5,7 +5,12 @@ import { valuesService } from './ValuesService'
 class CharactersService {
   async getCharacters() {
     const res = await api.get('api/characters')
-    AppState.characters = res.data
+    AppState.characters = res.data.filter(c => !c.dead)
+  }
+
+  async getGraveyard() {
+    const res = await api.get('api/characters')
+    AppState.graveyard = res.data.filter(c => c.dead)
   }
 
   async getCharacterById(id) {
@@ -15,12 +20,17 @@ class CharactersService {
 
   async getCharactersByCreatorId(id) {
     const res = await api.get(`api/characters?creatorId=${id}`)
-    AppState.characters = res.data
+    AppState.characters = res.data.filter(c => !c.dead)
     AppState.characters.forEach(c => {
       if (c.liveGames[0]) {
         AppState.activeCharacter = c
       }
     })
+  }
+
+  async getGraveyardByCreatorId(id) {
+    const res = await api.get(`api/characters?creatorId=${id}`)
+    AppState.graveyard = res.data.filter(c => c.dead)
   }
 
   async createCharacter(data) {
