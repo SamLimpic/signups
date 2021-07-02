@@ -1,19 +1,19 @@
 <template>
   <!-- ANCHOR Renders available Games -->
-  <div :id="gameProp.id + '-card'" class="col-md-6 col-12 p-2">
-    <div class="row justify-content-between position-relative bg-light rounded shadow m-sm-2 mx-3 mb-2 p-sm-2 p-1">
-      <div class="col-lg-9 col-md-8 col-sm-10 col-9 text-left cover h-100 pt-2">
-        <h3 class="font-sm p-0 m-0">
+  <div :id="gameProp.id + '-card'" class="col-md-6 col-12 px-md-3 py-md-4 px-2 py-3">
+    <div class="row justify-content-end position-relative bg-light rounded shadow h-100 m-sm-2 mx-3 mb-2 p-sm-2 p-1">
+      <div class="right col-12 text-left cover pt-2">
+        <h3 class="font-sm m-0">
           [ {{ gameProp.size }} Players ]
         </h3>
         <h4 class="font-xl m-0">
           {{ gameProp.title }}
         </h4>
-        <h5 class="font-sm">
+        <h5 class="font-sm px-md-3 px-1">
           <i>By {{ gameProp.creator.name }}</i>
         </h5>
-        <div class="b-line m-1 mb-2"></div>
-        <h6 class="font-md">
+        <div class="b-line mb-2"></div>
+        <h6 class="font-md px-md-3 px-1">
           {{ gameProp.description }}
         </h6>
       </div>
@@ -28,36 +28,42 @@
           Remove
         </button>
       </div>
-    </div>
-    <div class="icons text-right">
-      <p class="p-0 m-0" v-if="gameProp.live">
-        <span class="date-text font-xs">{{ gameProp.date.substring(5, 10) }} </span><i class="far fa-calendar-check font-lg text-primary pl-2"></i>
-      </p>
-      <p class="p-0 m-0" v-else>
-        <span class="past-date-text font-xs">{{ gameProp.date.substring(5, 10) }} </span><i class="far fa-calendar-times font-lg text-secondary pl-2"></i>
-      </p>
-      <p class="p-0 m-0">
-        <span class="week-text font-xs">{{ gameProp.length }} Week</span><i class="fas fa-history font-lg text-danger pl-2"></i>
-      </p>
-      <p class="p-0 m-0">
-        <span class="exp-text font-xs">{{ gameProp.experience }} EXP</span><i class="fas fa-star-half-alt font-lg text-success pl-2"></i>
-      </p>
-      <p class="p-0 m-0" v-if="gameProp.masked">
-        <span class="virus-text font-xs">Masked</span><i class="fas fa-shield-virus font-lg text-info  pl-2"></i>
-      </p>
-      <p class="p-0 m-0" v-if="gameProp.outdoor">
-        <span class="sun-text font-xs">Outdoor</span><i class="fa fa-sun font-lg text-warning pl-2"></i>
-      </p>
+      <div class="icons rounded shadow px-2 pt-2 pb-1 text-left">
+        <p class="text-primary pl-1 m-0" v-if="gameProp.live">
+          <i class="far fa-clock font-lg pr-2"></i>
+          <span class="font-sm pr-1">{{ gameProp.date.substring(5, 10) }} </span>
+        </p>
+        <p class="text-muted pl-1 m-0" v-else>
+          <i class="fas fa-clock font-lg pr-2"></i>
+          <span class="font-sm pr-1">{{ gameProp.date.substring(5, 10) }} </span>
+        </p>
+        <p class="text-danger pl-1 m-0">
+          <i class="fas fa-history font-lg pr-2"></i>
+          <span class="font-sm pr-1">{{ gameProp.length }} Week</span>
+        </p>
+        <p class="text-success pl-1 m-0">
+          <i class="fas fa-star-half-alt font-lg pr-2"></i>
+          <span class="font-sm pr-1">{{ gameProp.experience }} Exp</span>
+        </p>
+        <p class="text-info pl-1 m-0" v-if="gameProp.masked">
+          <i class="fas fa-shield-virus font-lg pr-2"></i>
+          <span class="font-sm pr-1">Masked</span>
+        </p>
+        <p class="text-warning pl-1 m-0" v-if="gameProp.outdoor">
+          <i class="fa fa-sun font-lg pr-2"></i>
+          <span class="font-sm pr-1">Outdoor</span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { computed, onMounted, reactive } from 'vue'
-import { AppState } from '../AppState'
-import Notification from '../utils/Notification'
-import { charactersService } from '../services/CharactersService'
-import { accountService } from '../services/AccountService'
+import { AppState } from '../../AppState'
+import Notification from '../../utils/Notification'
+import { charactersService } from '../../services/CharactersService'
+import { accountService } from '../../services/AccountService'
 
 export default {
   name: 'GameList',
@@ -131,30 +137,7 @@ export default {
   position: absolute;
   font-family: "Aladin", cursive;
   font-weight:500;
-}
-.virus-text {
-  color: var(--info);
-  opacity: .75;
-}
-.sun-text {
-  color: var(--warning);
-  opacity: .75;
-}
-.exp-text {
-  color: var(--success);
-  opacity: .75;
-}
-.week-text {
-  color: var(--danger);
-  opacity: .75;
-}
-.date-text {
-  color: var(--priamry);
-  opacity: .75;
-}
-.past-date-text {
-  color: var(--secondary);
-  opacity: .75;
+  background: lighten(#daccac, 20%);
 }
 .remove {
   transition: opacity 1s ease-in-out;
@@ -171,123 +154,132 @@ export default {
   position: absolute;
 }
 @media (min-width: 0) {
-p {
-  height: 2rem;
-}
 .cover {
-  min-height: 10rem;
+  min-height: 8rem;
 }
 .btn-cover {
   min-height: 3rem;
 }
 .icons {
-  right: 2.25rem;
-  top: 1.25rem;
+  right: -.5rem;
+  top: -.5rem;
+}
+.right {
+  padding-right: 6.5rem;
 }
 .btn-left {
+  width: 6.5rem;
   bottom: .5rem;
   left: .5rem;
 }
 .btn-right {
+  width: 6.5rem;
   bottom: .5rem;
   right: .5rem;
 }
 }
 
 @media (min-width: 576px) {
-p {
-  height: 2.25rem;
-}
 .cover {
-  min-height: 11rem;
+  min-height: 7.75rem;
 }
 .btn-cover {
-  min-height: 2.75rem;
+  min-height: 3.25rem;
 }
 .icons {
-  right: 1.75rem;
-  top: 1.75rem;
+  right: -.75rem;
+  top: -.75rem;
+}
+.right {
+  padding-right: 6.75rem;
 }
 .btn-left {
+  width: 6.75rem;
   bottom: .25rem;
   left: .25rem;
 }
 .btn-right {
+  width: 6.75rem;
   bottom: .25rem;
   right: .25rem;
 }
 }
 
 @media (min-width: 768px) {
-p {
-  height: 2.25rem;
-}
 .cover {
-  min-height: 11.5rem;
+  min-height: 9.75rem;
 }
 .btn-cover {
   min-height: 3.25rem;
 }
 .icons {
-  right: 2rem;
-  top: 2rem;
+  right: -.75rem;
+  top: -.75rem;
+}
+.right {
+  padding-right: 7.25rem;
 }
 .btn-left {
+  width: 7.25rem;
   bottom: .5rem;
   left: .5rem;
 }
 .btn-right {
+  width: 7.25rem;
   bottom: .5rem;
   right: .5rem;
 }
 }
 
 @media (min-width: 992px) {
-p {
-  height: 2.5rem;
-}
 .cover {
-  min-height: 13rem;
+  min-height: 11rem;
 }
 .btn-cover {
   min-height: 3.5rem;
 }
 .icons {
-  right: 2.25rem;
-  top: 2.25rem;
+  right: -.75rem;
+  top: -.75rem;
+}
+.right {
+  padding-right: 8rem;
 }
 .btn-left {
+  width: 8rem;
   bottom: .5rem;
   left: .5rem;
 }
 .btn-right {
+  width: 8rem;
   bottom: .5rem;
   right: .5rem;
 }
 }
 
 @media (min-width: 1200px) {
-p {
-  height: 2.75rem;
-}
 .cover {
-  min-height: 15rem;
+  min-height: 13rem;
 }
 .btn-cover {
   min-height: 4rem;
 }
 .icons {
-  right: 2.5rem;
-  top: 2.5rem;
+  right: -.75rem;
+  top: -.75rem;
+}
+.right {
+  padding-right: 8.75rem;
 }
 .btn-left {
+  width: 8.75rem;
   bottom: .75rem;
   left: .75rem;
 }
 .btn-right {
+  width: 8.75rem;
   bottom: .75rem;
   right: .75rem;
 }
 }
-
 </style>

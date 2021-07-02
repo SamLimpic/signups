@@ -21,9 +21,6 @@ export class ValuesController extends BaseController {
   async editValue(req, res, next) {
     try {
       req.body.id = req.params.id
-      req.body.expMin = req.params.expMin
-      req.body.expMax = req.params.expMax
-      req.body.expBase = req.params.expBase
       const data = await valuesService.editValue(req.body)
       return res.send(data)
     } catch (error) {

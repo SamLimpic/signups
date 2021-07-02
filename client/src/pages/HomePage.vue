@@ -1,7 +1,7 @@
 <template>
-  <div class="home flex-grow-1 container-fluid align-items-center mt-3 mx-4 mb-4">
+  <div class="home flex-grow-1 container-fluid align-items-center m-3">
     <div class="row justify-content-around" v-if="state.loading">
-      <div class="col-12 text-center p-md-3 py-1">
+      <div class="col-12 text-center p-md-3 px-2 pt-2">
         <h2 class="font-xxl">
           <u>Sneaking past the Dragon...</u>
         </h2>
@@ -9,20 +9,20 @@
       </div>
     </div>
     <div class="row justify-content-around" v-else>
-      <div class="col-12 text-center p-md-3 px-2 pt-1">
+      <div class="col-12 text-center p-md-3 px-2 pt-2">
         <h2 class="font-xxl mb-3">
           <u>Welcome to the Dragon's Den!</u>
         </h2>
-        <div class="shadow rounded bg-light text-center py-3 px-4 my-2">
-          <p class="font-xl mb-2">
-            The Dragon's Den was designed to make signups for BattleMage D&D as simple and easy as possible for everyone!
+        <div class="shadow rounded bg-light text-center px-4 py-3 my-2">
+          <p class="font-xl px-0 mb-2">
+            This site was created for all you loyal players, and designed to streamline the signup process for BattleMage D&D
           </p>
           <h3><i class="fas fa-dungeon text-warning icon my-2"></i></h3>
-          <p class="font-lg my-2">
+          <p class="font-lg px-1 my-2">
             All players will have 24 hours to select their preferred games, so take your time and sign up whenever it's most convenient for you.
           </p>
-          <p class="font-lg">
-            Log in every Saturday at 10AM to sign up, and results will go live every Sunday!
+          <p class="font-lg px-2 ">
+            Games go live every Saturday at 9AM, and Results go live Sunday!
           </p>
           <div v-if="state.user.isAuthenticated">
             <router-link :to="{name: 'Games'}">
@@ -46,6 +46,7 @@
 import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { AuthService } from '../services/AuthService'
+import { router } from '../router'
 
 export default {
   name: 'Home',
@@ -55,12 +56,14 @@ export default {
       loading: true
     })
     onMounted(async() => {
+      AppState.profile = false
       setTimeout(function() { state.loading = false }, 1500)
     })
     return {
       state,
       async login() {
-        AuthService.loginWithPopup()
+        await AuthService.loginWithPopup()
+        router.push('Games')
       }
     }
   }

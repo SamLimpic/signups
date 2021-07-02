@@ -19,7 +19,7 @@
         >
           Login
         </button>
-        <button type="button" class="btn btn-outline-light font-sm" v-else-if="profile" @click="edit">
+        <button type="button" class="btn btn-outline-light font-sm py-1" v-else-if="profile" @click="edit">
           Edit Account
         </button>
         <div class="dropdown" v-else>

@@ -1,14 +1,27 @@
 <template>
-  <div class="admin flex-grow-1 d-flex flex-column align-items-center mt-3 mx-4 mb-4">
-    <div class="row justify-content-around" v-if="state.account.dm">
-      <div class="col-12 text-center">
-        <h2 class="font-xxl">
+  <div class="admin flex-grow-1 container-fluid align-items-center m-3">
+    <div class="row justify-content-around" v-if="state.account.admin && !state.loading">
+      <div class="col-lg-9 col-md-10 col-sm-11 col-12 text-left p-md-3 px-4 py-2" v-if="state.experience">
+        <h2 class="font-xxl text-center m-0">
           <u>Welcome {{ state.account.name }}!</u>
         </h2>
+        <h3 class="font-xl text-center mt-md-1">
+          Here are the current Experience values
+        </h3>
+        <EditExperience />
+      </div>
+      <div class="col-lg-9 col-md-10 col-sm-11 col-12 text-left p-md-3 px-4 py-2">
+        <h2 class="font-xxl text-center m-0">
+          <u>Welcome {{ state.account.name }}!</u>
+        </h2>
+        <h3 class="font-xl text-center mt-md-1">
+          What games do you want to look over?
+        </h3>
+        <EditExperience />
       </div>
     </div>
     <div class="row justify-content-around" v-else>
-      <div class="col-12 text-center">
+      <div class="col-12 text-center p-md-3 px-2 pt-2">
         <h2 class="font-xxl">
           <u>Checking for proper credentials...</u>
         </h2>
@@ -20,17 +33,32 @@
 
 <script>
 import { computed, onMounted, reactive } from '@vue/runtime-core'
+import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
+import { gamesService } from '../services/GamesService'
+import Notification from '../utils/Notification'
+import { valuesService } from '../services/ValuesService'
 
 export default {
   name: 'Admin',
   setup() {
+    const route = useRoute()
     const state = reactive({
       account: computed(() => AppState.account),
-      loading: true
+      values: computed(() => AppState.values),
+      loading: true,
+      experience: false,
+      games: false,
+      character: false
     })
     onMounted(async() => {
-
+      try {
+        await gamesService.getGamesByCreatorId(route.params.id)
+        await valuesService.getValues()
+        state.loading = false
+      } catch (error) {
+        Notification.toast('Error: ' + error, 'error')
+      }
     })
     return {
       state
@@ -39,8 +67,4 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.fa-dragon {
-  transform: scaleX(-1);
-  font-size: 15rem;
-}
 </style>

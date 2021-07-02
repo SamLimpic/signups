@@ -1,7 +1,7 @@
 <template>
-  <div class="games flex-grow-1 container-fluid align-items-center text-center mt-3 mx-4 mb-4">
+  <div class="games flex-grow-1 container-fluid align-items-center text-center m-3">
     <div class="row justify-content-around" v-if="state.loading">
-      <div class="col-12 p-sm-3 p-2">
+      <div class="col-12 p-md-3 px-2 pt-2">
         <h2 class="font-xxl">
           <u>Accessing Current Game Data</u>
         </h2>
@@ -9,20 +9,20 @@
       </div>
     </div>
     <div class="row justify-content-around" v-else-if="state.account.live">
-      <div class="col-12 p-md-3 px-3 pt-1">
+      <div class="col-12 p-md-3 px-2 pt-2">
         <h2 class="font-xxl m-0">
           <u>Here are your final selections!</u>
         </h2>
         <h3 class="font-xl m-0">
           Check back Sunday for the official roster
         </h3>
-        <div class="row justify-content-around">
+        <div class="row justify-content-around mt-1">
           <GameSummary v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" />
         </div>
       </div>
     </div>
     <div class="row justify-content-around" v-else>
-      <div class="col-xl-8 col-lg-9 col-md-10 col-11 p-md-3 px-2 pt-1" v-if="!state.characters[0]">
+      <div class="col-xl-8 col-lg-9 col-md-10 col-11 p-md-3 px-2 pt-2" v-if="!state.characters[0]">
         <h2 class="font-xxl">
           <u>You don't have any characters to play with!</u>
         </h2>
@@ -31,7 +31,7 @@
         </h3>
         <CreateCharacter />
       </div>
-      <div class="col-12 p-md-3 px-2 pt-1" v-else-if="!state.activeCharacter.id">
+      <div class="col-12 p-md-3 px-2 pt-2" v-else-if="!state.activeCharacter.id">
         <h2 class="font-xxl m-0">
           <u>Which character do you want to play this week?</u>
         </h2>
@@ -42,18 +42,18 @@
           <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" />
         </div>
       </div>
-      <div class="col-12 p-md-3 px-2 pt-1" v-else-if="(state.choice + state.removed) <= state.games.length">
+      <div class="col-12 p-md-3 px-2 pt-2" v-else-if="(state.choice + state.removed) <= state.games.length">
         <h2 class="font-xxl m-0">
           <u>Here is this week's selection!</u>
         </h2>
         <h3 class="font-xl m-0">
-          Select each game in your preferred order, or remove a game if you aren't interested
+          Select each game in your preferred order, or remove any you aren't interested in
         </h3>
-        <div class="row justify-content-around">
+        <div class="row justify-content-around mt-1">
           <GameList v-for="g in state.games" :key="g.id" :game-prop="g" />
         </div>
       </div>
-      <div class="col-12 p-md-3 px-2 pt-1" v-else-if="state.choice === 0">
+      <div class="col-12 p-md-3 px-2 pt-2" v-else-if="state.choice === 0">
         <h2 class="font-xxl m-0">
           <u>Think you're funny huh?</u>
         </h2>
@@ -64,9 +64,6 @@
         <button type="button" class="btn btn-primary font-xl mb-lg-3 mb-2" @click="reload">
           Restart
         </button>
-        <div class="row justify-content-around">
-          <GameSummary v-for="(g, index) in state.choices" :key="g.id" :game-prop="g" :index-prop="index + 1" />
-        </div>
       </div>
     </div>
   </div>

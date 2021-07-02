@@ -77,7 +77,7 @@ export default class Notification {
       icon: 'question',
       title: "What is your character's name?",
       input: 'text',
-      inputPlaceholder: username
+      inputValue: username
     })
     if (name) {
       AppState.activeCharacter.name = name
@@ -92,4 +92,39 @@ export default class Notification {
       }
     }
   }
+
+  // static async multiModal(name = AppState.activeCharacter.name) {
+  //   // eslint-disable-next-line vue/one-component-per-file
+  //   await Swal.mixin({
+  //     title: `Edit ${name}'s information`,
+  //     input: 'text',
+  //     confirmButtonText: 'Next &rarr;',
+  //     confirmButtonColor: '#4f6031',
+  //     progressSteps: [1, 2]
+  //   }).queue([
+  //     {
+  //       title: "What is your character's name?",
+  //       icon: 'question',
+  //       inputPlaceholder: name
+  //     },
+  //     {
+  //       title: 'What does your character look like?',
+  //       icon: 'info',
+  //       inputPlaceholder: "We've provided you a placeholder by default"
+  //     }
+  //   ]).then((result) => {
+  //     if (result.value) {
+  //       if (result.value[0] === '') {
+  //         AppState.activeCharacter.name = 'The Nameless One'
+  //       } else {
+  //         AppState.activeCharacter.name = result.value[0]
+  //       }
+  //       if (result.value[1] === '') {
+  //         AppState.activeCharacter.imgUrl = 'http://www.geocities.ws/Area51/Orion/3107/Lance21.jpg'
+  //       } else {
+  //         AppState.activeCharacter.imgUrl = result.value[1]
+  //       }
+  //     }
+  //   })
+  // }
 }

@@ -1,21 +1,21 @@
 <template>
-  <div class="dm flex-grow-1 container-fluid align-items-center mt-3 mx-4 mb-4">
-    <div class="row justify-content-around mt-3 mb-4" v-if="state.account.dm && !state.loading">
-      <div class="col-10 text-left">
-        <h2 class="font-xxl text-center">
+  <div class="dm flex-grow-1 container-fluid align-items-center m-3">
+    <div class="row justify-content-around" v-if="state.account.dm && !state.loading">
+      <div class="col-xl-9 col-md-10 col-sm-11 col-12 text-left p-md-3 px-4 py-2">
+        <h2 class="font-xxl text-center m-0">
           <u>Welcome {{ state.account.name }}!</u>
         </h2>
-        <h3 class="font-xl text-center mt-2" v-if="!state.activeGame.live">
+        <h3 class="font-xl text-center mt-md-1" v-if="!state.activeGame.live">
           Looks like you haven't added a Game to this week's roster.
         </h3>
-        <h3 class="font-xl text-center mt-2" v-else>
+        <h3 class="font-xl text-center mt-md-1" v-else>
           Need to look over this week's Game?
         </h3>
         <CreateGame :game-prop="state.activeGame" />
       </div>
     </div>
-    <div class="row justify-content-around my-3" v-else>
-      <div class="col-12 text-center">
+    <div class="row justify-content-around" v-else>
+      <div class="col-12 text-center p-md-3 px-2 pt-2">
         <h2 class="font-xxl">
           <u>Checking for proper credentials...</u>
         </h2>

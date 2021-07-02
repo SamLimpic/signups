@@ -6,8 +6,6 @@
 
 <script>
 import { onMounted, reactive } from 'vue'
-import { AppState } from '../AppState'
-import Notification from '../utils/Notification'
 
 export default {
   name: 'ExperienceDrop',

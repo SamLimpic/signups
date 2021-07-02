@@ -7,9 +7,9 @@ class ValuesService {
     AppState.values = res.data[0]
   }
 
-  async editValue(id, edit) {
+  async editValues(id, edit) {
     const res = await api.put(`api/values/${id}`, edit)
-    AppState.values = res.data[0]
+    AppState.values = res.data
   }
 }
 

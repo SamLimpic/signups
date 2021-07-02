@@ -1,6 +1,6 @@
 <template>
   <!-- ANCHOR Renders available Characters -->
-  <div class="col-lg-3 col-md-4 col-sm-5 col-6 mt-3 px-md-3 px-sm-0 px-2">
+  <div class="col-lg-3 col-md-4 col-sm-5 col-6 px-md-3 p-2">
     <div class="row justify-content-between bg-light rounded shadow text-left hoverable mx-0 mb-sm-3 pt-3" @click="select(charProp)" v-if="!liveProp">
       <div class="col-12 mb-2">
         <h3 class="font-xl text-center m-0">
@@ -64,9 +64,9 @@
 
 <script>
 import { computed, onMounted, reactive } from 'vue'
-import { AppState } from '../AppState'
-import { charactersService } from '../services/CharactersService'
-import Notification from '../utils/Notification'
+import { AppState } from '../../AppState'
+import { charactersService } from '../../services/CharactersService'
+import Notification from '../../utils/Notification'
 
 export default {
   name: 'CharacterList',

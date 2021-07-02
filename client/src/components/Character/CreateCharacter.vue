@@ -1,6 +1,5 @@
 <template>
-  <!-- ANCHOR Renders available Games -->
-  <div class="row justify-content-around m-sm-3 m-md-2 mt-3" v-if="state.activeCharacter.name && state.activeCharacter.race && state.activeCharacter.class">
+  <div class="row justify-content-around p-3" v-if="state.activeCharacter.name && state.activeCharacter.race && state.activeCharacter.class">
     <div class="col-12 bg-light rounded shadow py-4">
       <h4 class="font-xxl mb-3">
         <u>Register {{ state.activeCharacter.name }}, the {{ state.activeCharacter.race }} {{ state.activeCharacter.class }}?</u>
@@ -10,14 +9,14 @@
       </button>
     </div>
   </div>
-  <form class="row justify-content-around bg-light rounded shadow m-sm-3 m-md-2 mt-3 py-3" v-else>
-    <div class="col-sm-10 col-11">
+  <form class="row justify-content-around bg-light rounded shadow p-3" v-else>
+    <div class="col-sm-10 col-12">
       <div class="form-group font-xl">
         <label>Character Name</label>
         <input type="text" class="form-control font-xl" placeholder="" v-model="state.activeCharacter.name">
       </div>
     </div>
-    <div class="col-6 py-2">
+    <div class="col-6 px-0 py-2">
       <div class="dropdown dropup">
         <h3 class="font-xl pb-2">
           Character Race
@@ -48,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="col-6 py-2">
+    <div class="col-6 px-0 py-2">
       <div class="dropdown dropup">
         <h3 class="font-xl pb-2">
           Character Class
@@ -84,9 +83,9 @@
 
 <script>
 import { computed, onMounted, reactive } from 'vue'
-import { AppState } from '../AppState'
-import { charactersService } from '../services/CharactersService'
-import Notification from '../utils/Notification'
+import { AppState } from '../../AppState'
+import { charactersService } from '../../services/CharactersService'
+import Notification from '../../utils/Notification'
 
 export default {
   name: 'CreateCharacter',

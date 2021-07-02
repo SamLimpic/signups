@@ -3,6 +3,11 @@ import { api } from './AxiosService'
 
 // var cron = require('node-cron');
 class GamesService {
+  async getPastGames() {
+    const res = await api.get('api/games?live=false')
+    AppState.games = res.data
+  }
+
   async getGames() {
     const res = await api.get('api/games?live=true')
     AppState.games = res.data

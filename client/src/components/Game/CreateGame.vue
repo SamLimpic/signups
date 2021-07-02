@@ -1,6 +1,5 @@
 <template>
-  <!-- ANCHOR Renders available Games -->
-  <form class="row justify-content-around bg-light rounded shadow m-sm-3 m-md-2 mt-3 py-3 px-md-3 px-2">
+  <form class="row justify-content-around bg-light rounded shadow p-3">
     <div class="col-lg-6 col-12">
       <div class="form-group font-md">
         <label>Game Title</label>
@@ -70,9 +69,9 @@
 
 <script>
 import { computed, onMounted, reactive } from 'vue'
-import { AppState } from '../AppState'
-import { gamesService } from '../services/GamesService'
-import Notification from '../utils/Notification'
+import { AppState } from '../../AppState'
+import { gamesService } from '../../services/GamesService'
+import Notification from '../../utils/Notification'
 
 export default {
   name: 'CreateGame',

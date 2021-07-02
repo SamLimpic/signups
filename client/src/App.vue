@@ -6,7 +6,7 @@
     <router-view />
   </main>
   <footer>
-    <div class="bg-dark text-light text-center p-4">
+    <div class="bg-dark text-light text-center py-3">
       <h4 class="footer-text m-0">
         Made with <i class="fas fa-heart mx-1"></i> by Samwise
       </h4>
