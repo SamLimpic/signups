@@ -27,7 +27,7 @@
           <h5 class="font-sm px-md-3 px-1">
             <i>By {{ gameProp.creator.name }}</i>
           </h5>
-          <div class="b-line mx-2 mb-2"></div>
+          <div class="b-line mx-2 mb-2" />
           <h6 class="font-md px-md-3 px-1">
             <i>{{ gameProp.description }}</i>
           </h6>
@@ -107,7 +107,7 @@ export default {
   position: absolute;
   font-family: "Aladin", cursive;
   font-weight:500;
-  background: lighten(#daccac, 20%);
+  background: lighten(#f0efe6, 15%);
   top: -1rem;
   right: -1rem;
 }

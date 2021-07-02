@@ -12,7 +12,7 @@
         <h5 class="font-sm px-md-3 px-1">
           <i>By {{ gameProp.creator.name }}</i>
         </h5>
-        <div class="b-line mb-2"></div>
+        <div class="b-line mb-2" />
         <h6 class="font-md px-md-3 px-1">
           {{ gameProp.description }}
         </h6>
@@ -21,21 +21,22 @@
         <button type="button" :id="gameProp.id" class="btn btn-success btn-left font-md py-1" @click="select(state.choice, gameProp)" v-if="!liveProp">
           Select
         </button>
-        <button type="button" class="btn btn-success btn-left font-md py-1" disabled v-if="liveProp">
-          Choice {{ indexProp }}
-        </button>
         <button type="button" :id="gameProp.id + '-remove'" class="btn btn-danger btn-right font-md py-1" @click="select(-1, gameProp)" v-if="!liveProp">
           Remove
         </button>
       </div>
       <div class="icons rounded shadow px-2 pt-2 pb-1 text-left">
-        <p class="text-primary pl-1 m-0" v-if="gameProp.live">
+        <p class="text-primary pl-1 m-0" v-if="liveProp">
+          <i class="fas fa-dice-d20 font-md pr-2"></i>
+          <span class="font-xs pr-1">Choice {{ indexProp }} </span>
+        </p>
+        <p class="text-primary pl-1 m-0" v-else-if="gameProp.live">
           <i class="far fa-clock font-lg pr-2"></i>
-          <span class="font-sm pr-1">{{ gameProp.date.substring(5, 10) }} </span>
+          <span class="font-sm pr-1">{{ state.week[state.day] }} </span>
         </p>
         <p class="text-muted pl-1 m-0" v-else>
           <i class="fas fa-clock font-lg pr-2"></i>
-          <span class="font-sm pr-1">{{ gameProp.date.substring(5, 10) }} </span>
+          <span class="font-sm pr-1">{{ state.week[state.day] }} </span>`
         </p>
         <p class="text-danger pl-1 m-0">
           <i class="fas fa-history font-lg pr-2"></i>
@@ -81,16 +82,19 @@ export default {
       default: false
     }
   },
-  setup() {
+  setup(props) {
     const state = reactive({
       account: computed(() => AppState.account),
       activeCharacter: computed(() => AppState.activeCharacter),
       games: computed(() => AppState.games),
       choice: computed(() => AppState.count.choice),
-      removed: computed(() => AppState.count.removed)
+      removed: computed(() => AppState.count.removed),
+      week: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     })
     onMounted(async() => {
-
+      const date = new Date(props.gameProp.date.substring(0, 10).replace('-', ', '))
+      const day = date.getDay()
+      state.day = day
     })
     return {
       state,

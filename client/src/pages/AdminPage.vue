@@ -19,6 +19,14 @@
         </h3>
         <EditExperience />
       </div>
+      <div class="col-12 text-center p-md-3 px-2 pt-2" v-if="state.games[0]">
+        <h2 class="font-xl m-0">
+          Here are this week's games!
+        </h2>
+        <div class="row justify-content-around">
+          <GameSummary v-for="(g, index) in state.games" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
+        </div>
+      </div>
     </div>
     <div class="row justify-content-around" v-else>
       <div class="col-12 text-center p-md-3 px-2 pt-2">
@@ -33,7 +41,6 @@
 
 <script>
 import { computed, onMounted, reactive } from '@vue/runtime-core'
-import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
 import { gamesService } from '../services/GamesService'
 import Notification from '../utils/Notification'
@@ -42,18 +49,17 @@ import { valuesService } from '../services/ValuesService'
 export default {
   name: 'Admin',
   setup() {
-    const route = useRoute()
     const state = reactive({
       account: computed(() => AppState.account),
+      games: computed(() => AppState.games),
       values: computed(() => AppState.values),
       loading: true,
       experience: false,
-      games: false,
       character: false
     })
     onMounted(async() => {
       try {
-        await gamesService.getGamesByCreatorId(route.params.id)
+        await gamesService.getGames()
         await valuesService.getValues()
         state.loading = false
       } catch (error) {

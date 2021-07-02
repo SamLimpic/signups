@@ -22,11 +22,19 @@
         <h1 class="font-xxl m-0">
           <u>Welcome {{ state.account.name }}</u>
         </h1>
-        <h2 class="font-xl m-0">
+        <h2 class="font-xl">
           Here are your registered characters!
         </h2>
         <div class="row justify-content-around">
           <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" :live-prop="state.profile" />
+        </div>
+      </div>
+      <div class="col-12 p-md-3 px-2 pt-2" v-if="state.account.live">
+        <h2 class="font-xl">
+          Here are your selections for this week!
+        </h2>
+        <div class="row justify-content-around">
+          <GameSummary v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" />
         </div>
       </div>
     </div>
@@ -45,6 +53,7 @@ export default {
     const state = reactive({
       account: computed(() => AppState.account),
       characters: computed(() => AppState.characters),
+      activeCharacter: computed(() => AppState.activeCharacter),
       graveyard: computed(() => AppState.graveyard),
       profile: computed(() => AppState.profile),
       loading: true
