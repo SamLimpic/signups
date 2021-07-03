@@ -1,5 +1,7 @@
 import { AppState } from '../AppState'
+import { accountService } from './AccountService'
 import { api } from './AxiosService'
+import { charactersService } from './CharactersService'
 
 // var cron = require('node-cron');
 class GamesService {
@@ -21,8 +23,10 @@ class GamesService {
   async getGamesByCreatorId(id) {
     const res = await api.get(`api/games?creatorId=${id}`)
     AppState.games = res.data
-    AppState.activeGame = AppState.games.find(g => g.live === true)
-    AppState.activeGame.date = AppState.activeGame.date.substring(0, 10)
+    AppState.activeGames = AppState.games.filter(g => g.live === true)
+    AppState.activeGames.forEach(g => {
+      g.date = g.date.substring(0, 10)
+    })
   }
 
   async createGame(data) {
@@ -30,14 +34,41 @@ class GamesService {
   }
 
   async editGame(id, edit) {
+    const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const date = new Date(edit.date.substring(0, 10).replace('-', ', '))
+    const day = date.getDay()
+    edit.day = week[day]
     const res = await api.put(`api/games/${id}`, edit)
-    AppState.activeGame = res.data
-    AppState.activeGame.date = AppState.activeGame.date.substring(0, 10)
+    let game = AppState.activeGames.find(g => g.id === id)
+    game = res.data
+    game.date = game.date.substring(0, 10)
   }
 
   async deleteGame(id) {
     await api.delete(`api/games/${id}`)
     AppState.games = AppState.games.filter(g => g.id !== id)
+  }
+
+  async buildRoster() {
+    await charactersService.getCharacters()
+    await this.getGames()
+    const characters = AppState.characters.filter(c => c.liveGames[0])
+    const games = AppState.games
+    characters.forEach(c => {
+      let monday = false
+      let tuesday = false
+      let mixed = false
+      c.liveGames.forEach(g => {
+        if (g.day === 'Monday') {
+          monday = true
+        } else if (g.day === 'Tuesday') {
+          tuesday = true
+        }
+        if (monday && tuesday) {
+          mixed = true
+        }
+      })
+    })
   }
 }
 
@@ -54,5 +85,4 @@ class GamesService {
 //   scheduled: true,
 //   timezone: "America/Los_Angeles"
 // });
-
 export const gamesService = new GamesService()

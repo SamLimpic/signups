@@ -15,11 +15,13 @@ export const AppState = reactive({
   // ANCHOR Base Arrays
   characters: [],
   games: [],
+  liveGames: [],
   choices: [],
   graveyard: [],
 
   // ANCHOR Dictionaries
   count: {
+    game: 0,
     choice: 0,
     removed: 0
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="admin flex-grow-1 container-fluid align-items-center m-3">
     <div class="row justify-content-around" v-if="state.account.admin && !state.loading">
-      <div class="col-lg-9 col-md-10 col-sm-11 col-12 text-left p-md-3 px-4 py-2" v-if="state.experience">
+      <div class="col-lg-10 col-sm-11 col-12 text-left p-md-3 px-4 py-2" v-if="state.values">
         <h2 class="font-xxl text-center m-0">
           <u>Welcome {{ state.account.name }}!</u>
         </h2>
@@ -10,21 +10,12 @@
         </h3>
         <EditExperience />
       </div>
-      <div class="col-lg-9 col-md-10 col-sm-11 col-12 text-left p-md-3 px-4 py-2">
-        <h2 class="font-xxl text-center m-0">
-          <u>Welcome {{ state.account.name }}!</u>
-        </h2>
-        <h3 class="font-xl text-center mt-md-1">
-          What games do you want to look over?
-        </h3>
-        <EditExperience />
-      </div>
-      <div class="col-12 text-center p-md-3 px-2 pt-2" v-if="state.games[0]">
+      <div class="col-12 text-center p-md-3 px-2 pt-4" v-if="state.games[0]">
         <h2 class="font-xl m-0">
           Here are this week's games!
         </h2>
         <div class="row justify-content-around">
-          <GameSummary v-for="(g, index) in state.games" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
+          <GameList v-for="(g, index) in state.games" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
         </div>
       </div>
     </div>

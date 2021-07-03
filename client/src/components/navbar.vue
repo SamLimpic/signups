@@ -82,10 +82,12 @@ export default {
       account: computed(() => AppState.account),
       profile: computed(() => AppState.profile),
       async login() {
-        AuthService.loginWithPopup()
+        await AuthService.loginWithPopup()
+        Notification.toast('Successfully Logged In!', 'success')
       },
       async logout() {
-        AuthService.logout({ returnTo: window.location.origin })
+        await AuthService.logout({ returnTo: window.location.origin })
+        Notification.toast('Successfully Logged Out!', 'success')
       },
       async edit() {
         const name = AppState.account.name

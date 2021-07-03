@@ -34,7 +34,7 @@
           Here are your selections for this week!
         </h2>
         <div class="row justify-content-around">
-          <GameSummary v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" />
+          <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
         </div>
       </div>
     </div>

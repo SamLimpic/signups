@@ -1,10 +1,12 @@
 <template>
-  <a class="dropdown-item font-sm bg-secondary text-light text-center hoverable py-1 px-lg-4 px-3" @click="select(dropProp, typeProp)" v-if="!liveProp">{{ dropProp }}</a>
-  <a class="dropdown-item font-sm bg-secondary text-light text-center hoverable py-1 px-lg-4 px-3" @click="change(dropProp, typeProp)" v-else>{{ dropProp }}</a>
+  <a class="dropdown-item font-sm bg-info text-light text-center hoverable py-1 px-lg-4 px-3" @click="change(charProp)" v-if="charProp">{{ charProp.name }}</a>
+  <a class="dropdown-item font-sm bg-info text-light text-center py-1 px-lg-4 px-3" disabled v-else-if="liveProp">{{ dropProp }}</a>
+  <a class="dropdown-item font-sm bg-secondary text-light text-center hoverable py-1 px-lg-4 px-3" @click="select(dropProp, typeProp)" v-else>{{ dropProp }}</a>
   <div class="dropdown-divider p-0 m-0"></div>
 </template>
 
 <script>
+/* eslint-disable vue/require-default-prop */
 import { onMounted, reactive } from 'vue'
 import { AppState } from '../../AppState'
 import Notification from '../../utils/Notification'
@@ -12,13 +14,17 @@ import Notification from '../../utils/Notification'
 export default {
   name: 'CharacterDrop',
   props: {
+    charProp: {
+      type: Object,
+      required: false
+    },
     dropProp: {
       type: String,
-      required: true
+      required: false
     },
     typeProp: {
       type: String,
-      required: true
+      required: false
     },
     liveProp: {
       type: Boolean,
@@ -43,9 +49,9 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      change(choice, id) {
+      change(character) {
         try {
-          Notification.toast(`${choice} will participate this week`, 'success')
+          Notification.toast(`${character} will participate this week`, 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

@@ -3,27 +3,30 @@
     <div class="col-md-4 col-6">
       <div class="form-group font-lg">
         <label class="m-0">Weekly Minimum</label>
-        <input type="number" class="form-control font-lg" v-model="state.values.expMin">
+        <input type="number" class="form-control font-lg" v-model="state.values.min">
       </div>
     </div>
     <div class="col-md-4 col-6">
       <div class="form-group font-lg">
         <label class="m-0">Weekly Maximum</label>
-        <input type="number" class="form-control font-lg" v-model="state.values.expMax">
+        <input type="number" class="form-control font-lg" v-model="state.values.max">
       </div>
     </div>
     <div class="col-md-4 col-6">
       <div class="form-group font-lg">
-        <label class="m-0">Character Base</label>
-        <input type="number" class="form-control font-lg" v-model="state.values.expBase">
+        <label class="m-0">Exp Interval</label>
+        <input type="number" class="form-control font-lg" v-model="state.values.interval">
       </div>
     </div>
-    <div class="col-md-4 col-6 text-md-center mt-auto mb-3 pt-md-3">
-      <h2 class="font-lg mb-1">
-        Updated: <i>{{ state.values.updatedAt.substring(5, 10) }}</i>
-      </h2>
+    <div class="col-md-4 col-6 mr-auto">
+      <div class="form-group font-lg">
+        <label class="m-0">Character Base</label>
+        <input type="number" class="form-control font-lg" v-model="state.values.base">
+      </div>
+    </div>
+    <div class="col-md-4 col-8 text-md-center mt-auto mb-2 pt-md-3 py-2">
       <button type="button" class="btn btn-success w-100 font-lg" @click="confirm">
-        Confirm
+        Updated: <i>{{ state.values.updatedAt.substring(5, 10) }}</i>
       </button>
     </div>
   </form>

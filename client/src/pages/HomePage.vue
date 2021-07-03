@@ -46,7 +46,8 @@
 import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { AuthService } from '../services/AuthService'
-import { router } from '../router'
+import Notification from '../utils/Notification'
+import { gamesService } from '../services/GamesService'
 
 export default {
   name: 'Home',
@@ -58,12 +59,13 @@ export default {
     onMounted(async() => {
       AppState.profile = false
       setTimeout(function() { state.loading = false }, 1500)
+      await gamesService.buildRoster()
     })
     return {
       state,
       async login() {
         await AuthService.loginWithPopup()
-        router.push('Games')
+        Notification.toast('Successfully Logged In!', 'success')
       }
     }
   }

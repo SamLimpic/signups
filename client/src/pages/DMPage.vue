@@ -1,17 +1,14 @@
 <template>
   <div class="dm flex-grow-1 container-fluid align-items-center m-3">
     <div class="row justify-content-around" v-if="state.account.dm && !state.loading">
-      <div class="col-xl-9 col-md-10 col-sm-11 col-12 text-left p-md-3 px-4 py-2">
+      <div class="col-xl-9 col-md-11 col-12 text-left p-md-3 px-4 py-2">
         <h2 class="font-xxl text-center m-0">
           <u>Welcome {{ state.account.name }}!</u>
         </h2>
-        <h3 class="font-xl text-center mt-md-1" v-if="!state.activeGame.live">
-          Looks like you haven't added a Game to this week's roster.
+        <h3 class="font-xl text-center mt-md-1">
+          Need to look over this week's Games?
         </h3>
-        <h3 class="font-xl text-center mt-md-1" v-else>
-          Need to look over this week's Game?
-        </h3>
-        <CreateGame :game-prop="state.activeGame" />
+        <CreateGame v-for="(g, index) in state.activeGames" :key="index" :index-prop="index" />
       </div>
     </div>
     <div class="row justify-content-around" v-else>
@@ -39,12 +36,17 @@ export default {
     const route = useRoute()
     const state = reactive({
       account: computed(() => AppState.account),
-      activeGame: computed(() => AppState.activeGame),
+      activeGames: computed(() => AppState.activeGames),
       loading: true
     })
     onMounted(async() => {
       try {
         await gamesService.getGamesByCreatorId(route.params.id)
+        if (AppState.activeGames.length === 1) {
+          AppState.activeGames = [...{}]
+        } else if (!AppState.activeGames[0]) {
+          AppState.activeGames = [{}, {}]
+        }
         await valuesService.getValues()
         state.loading = false
       } catch (error) {

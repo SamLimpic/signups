@@ -35,7 +35,7 @@ class CharactersService {
 
   async createCharacter(data) {
     await valuesService.getValues()
-    data.experience = AppState.values.expBase
+    data.experience = AppState.values.base
     this.setLevel(data.experience)
     const res = await api.post('api/characters', data)
     AppState.activeCharacter = res.data
@@ -44,7 +44,7 @@ class CharactersService {
   async editCharacter(edit) {
     await valuesService.getValues()
     const char = AppState.activeCharacter
-    const exp = AppState.values.expBase
+    const exp = AppState.values.base
     if (char.experience < exp) {
       char.experience = exp
     }
