@@ -1,5 +1,4 @@
 import { AppState } from '../AppState'
-import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { charactersService } from './CharactersService'
 
@@ -52,23 +51,38 @@ class GamesService {
   async buildRoster() {
     await charactersService.getCharacters()
     await this.getGames()
+    this.sortRoster()
+  }
+
+  sortRoster() {
     const characters = AppState.characters.filter(c => c.liveGames[0])
     const games = AppState.games
+    const sorted = AppState.sorted
+    sorted.games.monday = games.filter(g => g.day === 'Monday')
+    sorted.games.tuesday = games.filter(g => g.day === 'Tuesday')
     characters.forEach(c => {
       let monday = false
       let tuesday = false
-      let mixed = false
       c.liveGames.forEach(g => {
         if (g.day === 'Monday') {
           monday = true
         } else if (g.day === 'Tuesday') {
           tuesday = true
         }
-        if (monday && tuesday) {
-          mixed = true
-        }
       })
+      if (monday && tuesday) {
+        sorted.characters.mixed.push(c)
+      } else if (monday) {
+        sorted.characters.monday.push(c)
+      } else if (tuesday) {
+        sorted.characters.tuesday.push(c)
+      }
     })
+    console.log(sorted)
+  }
+
+  buildGames() {
+
   }
 }
 

@@ -92,8 +92,8 @@ export default {
   setup() {
     const state = reactive({
       account: computed(() => AppState.account),
-      races: computed(() => AppState.races),
-      classes: computed(() => AppState.classes),
+      races: computed(() => AppState.values.races),
+      classes: computed(() => AppState.values.classes),
       activeCharacter: computed(() => AppState.activeCharacter)
     })
     onMounted(async() => {

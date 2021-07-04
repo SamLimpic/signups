@@ -6,9 +6,9 @@
           <u>Welcome {{ state.account.name }}!</u>
         </h2>
         <h3 class="font-xl text-center mt-md-1">
-          Here are the current Experience values
+          Here are the current Game Values
         </h3>
-        <EditExperience />
+        <EditValues />
       </div>
       <div class="col-12 text-center p-md-3 px-2 pt-4" v-if="state.games[0]">
         <h2 class="font-xl m-0">

@@ -20,11 +20,20 @@ export const AppState = reactive({
   graveyard: [],
 
   // ANCHOR Dictionaries
+  sorted: {
+    characters: {
+      monday: [],
+      tuesday: [],
+      mixed: []
+    },
+    games: {
+      monday: [],
+      tuesday: []
+    }
+  },
   count: {
     game: 0,
     choice: 0,
     removed: 0
-  },
-  races: ['Aasimar', 'Arakocra', 'Changeling', 'Dragonborn', 'Dwarf', 'Elf', 'Firbolg', 'Genasi', 'Gnome', 'Goliath', 'Half-Elf', 'Halfling', 'Half-Orc', 'Human', 'Kenku', 'Lizardfolk', 'Minotaur', 'Shifter', 'Tabaxi', 'Tiefling', 'Triton', 'Warforged', 'Yuan-Ti'],
-  classes: ['Artificer', 'Barbarian', 'Bard', 'Blood Hunter', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard']
+  }
 })

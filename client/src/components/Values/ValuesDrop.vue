@@ -8,7 +8,7 @@
 import { onMounted, reactive } from 'vue'
 
 export default {
-  name: 'ExperienceDrop',
+  name: 'ValuesDrop',
   props: {
     expProp: {
       type: Number,

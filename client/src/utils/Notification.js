@@ -93,6 +93,18 @@ export default class Notification {
     }
   }
 
+  static async values(type = String) {
+    const { value } = await Swal.fire({
+      icon: 'info',
+      title: `Add a new available ${type}`,
+      input: 'text',
+      inputPlaceholder: `New ${type}`
+    })
+    if (value) {
+      AppState.values[type.toLowerCase()].push(value)
+    }
+  }
+
   // static async multiModal(name = AppState.activeCharacter.name) {
   //   // eslint-disable-next-line vue/one-component-per-file
   //   await Swal.mixin({

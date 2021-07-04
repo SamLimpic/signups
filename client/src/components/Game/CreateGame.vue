@@ -24,7 +24,7 @@
         <div class="form-group col-lg-7 col-sm-4 col-8 font-md">
           <label>Experience</label>
           <select class="form-control font-sm" v-model="state.activeGames[indexProp].experience">
-            <ExperienceDrop v-for="e in state.experience" :key="e" :exp-prop="e" />
+            <ValuesDrop v-for="e in state.experience" :key="e" :exp-prop="e" />
           </select>
         </div>
         <div class="form-group col-lg-5 col-sm-4 col-4 font-md">

@@ -171,6 +171,7 @@ import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { gamesService } from '../services/GamesService'
 import Notification from '../utils/Notification'
+import { valuesService } from '../services/ValuesService'
 
 export default {
   name: 'Games',
@@ -203,6 +204,7 @@ export default {
     onMounted(async() => {
       try {
         await gamesService.getGames()
+        await valuesService.getValues()
         AppState.liveGames = AppState.games
         setTimeout(function() { state.loading = false }, 1000)
       } catch (error) {
