@@ -14,7 +14,8 @@ export const Game = new Schema(
     live: { type: Boolean, default: false },
     outdoor: { type: Boolean, default: false },
     masked: { type: Boolean, default: false },
-    players: { type: Array }
+    players: { type: Array },
+    choice: { type: Number }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

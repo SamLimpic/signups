@@ -129,6 +129,7 @@ export default {
             Notification.toast(`${game.title} has been removed!`, 'warning')
             AppState.count.removed++
           } else {
+            game.choice = num
             AppState.choices.push(game)
             document.getElementById(`${game.id}-remove`).disabled = true
             document.getElementById(`${game.id}-remove`).classList.add('remove')

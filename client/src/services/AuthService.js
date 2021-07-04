@@ -5,6 +5,7 @@ import { router } from '../router'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { charactersService } from './CharactersService'
+import { gamesService } from './GamesService'
 import { socketService } from './SocketService'
 
 export const AuthService = initialize({
@@ -30,6 +31,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   // NOTE if there is something you want to do once the user is authenticated, place that here
   // await accountService.updateTimeStamp(AppState.account)
   await charactersService.getCharactersByCreatorId(AppState.account.id)
+  // await gamesService.fuckedUp()
 })
 
 async function refreshAuthToken(config) {

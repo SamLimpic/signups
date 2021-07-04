@@ -59,7 +59,7 @@ export default {
     onMounted(async() => {
       AppState.profile = false
       setTimeout(function() { state.loading = false }, 1500)
-      await gamesService.buildRoster()
+      // await gamesService.buildRoster()
     })
     return {
       state,

@@ -46,6 +46,7 @@ export default class Notification {
       title: title,
       icon: display,
       position: position,
+      background: '#f9f7f3',
       timer: timer,
       timerProgressBar: progressBar,
       toast: true,
@@ -65,6 +66,7 @@ export default class Notification {
       icon: 'info',
       title: 'Customize your Username',
       input: 'text',
+      background: '#f9f7f3',
       inputPlaceholder: username
     })
     if (name) {
@@ -77,6 +79,7 @@ export default class Notification {
       icon: 'question',
       title: "What is your character's name?",
       input: 'text',
+      background: '#f9f7f3',
       inputValue: username
     })
     if (name) {
@@ -85,6 +88,7 @@ export default class Notification {
         icon: 'question',
         title: 'What does your character look like?',
         input: 'text',
+        background: '#f9f7f3',
         inputPlaceholder: 'Paste the URL of your preferred image'
       })
       if (imgUrl) {
@@ -98,6 +102,7 @@ export default class Notification {
       icon: 'info',
       title: `Add a new available ${type}`,
       input: 'text',
+      background: '#f9f7f3',
       inputPlaceholder: `New ${type}`
     })
     if (value) {

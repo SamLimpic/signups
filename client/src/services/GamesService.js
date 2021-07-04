@@ -57,32 +57,101 @@ class GamesService {
   sortRoster() {
     const characters = AppState.characters.filter(c => c.liveGames[0])
     const games = AppState.games
-    const sorted = AppState.sorted
-    sorted.games.monday = games.filter(g => g.day === 'Monday')
-    sorted.games.tuesday = games.filter(g => g.day === 'Tuesday')
+    const mixed = []
+    const monday = []
+    const tuesday = []
     characters.forEach(c => {
-      let monday = false
-      let tuesday = false
+      let mon = false
+      let tues = false
       c.liveGames.forEach(g => {
         if (g.day === 'Monday') {
-          monday = true
+          mon = true
         } else if (g.day === 'Tuesday') {
-          tuesday = true
+          tues = true
         }
       })
-      if (monday && tuesday) {
-        sorted.characters.mixed.push(c)
-      } else if (monday) {
-        sorted.characters.monday.push(c)
-      } else if (tuesday) {
-        sorted.characters.tuesday.push(c)
+      if (mon && tues) {
+        mixed.push(c)
+      } else if (mon) {
+        monday.push(c)
+      } else if (tues) {
+        tuesday.push(c)
       }
     })
-    console.log(sorted)
+    AppState.sorted = {
+      characters: {
+        mixed: mixed,
+        monday: monday,
+        tuesday: tuesday
+      },
+      games: games,
+      full: [],
+      roster: []
+    }
+    for (let i = 0; i < games.length; i++) {
+      this.buildGames('monday', i)
+      this.buildGames('tuesday', i)
+      this.buildGames('mixed', i)
+    }
+    console.log(AppState.sorted)
   }
 
-  buildGames() {
+  buildGames(str, num) {
+    const characters = AppState.sorted.characters[str]
+    const roster = AppState.sorted.roster
+    const full = AppState.sorted.full
+    const games = AppState.sorted.games
+    games.forEach(g => {
+      const holding = []
+      characters.forEach(c => {
+        if (c.liveGames.length > num) {
+          const game = c.liveGames.find(lg => lg.choice === num)
+          if (game.id === g.id) {
+            holding.push(c)
+          }
+        }
+      })
+      let currentIndex = holding.length; let randomIndex
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--
+        [holding[currentIndex], holding[randomIndex]] = [
+          holding[randomIndex], holding[currentIndex]]
+      }
+      holding.forEach(h => {
+        if (g.size > g.players.length) {
+          g.players.push(h)
+          AppState.sorted.characters[str] = AppState.sorted.characters[str].filter(c => c.id !== h.id)
+          roster.push(h)
+        }
+      })
+      if (g.size === g.players.length) {
+        AppState.sorted.games = AppState.sorted.games.filter(f => f.id !== g.id)
+        full.push(g)
+      }
+    })
+  }
 
+  async fuckedUp() {
+    await charactersService.getCharacters()
+    await this.getGames()
+    const characters = AppState.characters.filter(c => c.liveGames[0])
+    const games = AppState.games
+    for (let i = 0; i < characters.length; i++) {
+      let currentIndex = games.length; let randomIndex
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--;
+
+        [games[currentIndex], games[randomIndex]] = [
+          games[randomIndex], games[currentIndex]]
+      }
+      for (let k = 0; k < games.length; k++) {
+        characters[i].liveGames[k].choice = games[k]
+      }
+      AppState.activeCharacter = characters[i]
+      await charactersService.editCharacter(characters[i])
+    }
   }
 }
 

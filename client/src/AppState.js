@@ -11,6 +11,7 @@ export const AppState = reactive({
   values: {},
   activeCharacter: {},
   activeGame: {},
+  sorted: {},
 
   // ANCHOR Base Arrays
   characters: [],
@@ -20,17 +21,7 @@ export const AppState = reactive({
   graveyard: [],
 
   // ANCHOR Dictionaries
-  sorted: {
-    characters: {
-      monday: [],
-      tuesday: [],
-      mixed: []
-    },
-    games: {
-      monday: [],
-      tuesday: []
-    }
-  },
+
   count: {
     game: 0,
     choice: 0,
