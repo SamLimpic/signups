@@ -22,7 +22,7 @@
             All players will have 24 hours to select their preferred games, so take your time and sign up whenever it's most convenient for you.
           </p>
           <p class="font-lg px-2 ">
-            Games go live every Saturday at 9AM, and Results go live Sunday!
+            Games go live every Saturday at 9AM, and Results are posted Sunday!
           </p>
           <div v-if="state.user.isAuthenticated">
             <router-link :to="{name: 'Games'}">
@@ -59,7 +59,6 @@ export default {
     onMounted(async() => {
       AppState.profile = false
       setTimeout(function() { state.loading = false }, 1500)
-      // await gamesService.buildRoster()
     })
     return {
       state,

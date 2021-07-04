@@ -57,40 +57,40 @@ class GamesService {
   sortRoster() {
     const characters = AppState.characters.filter(c => c.liveGames[0])
     const games = AppState.games
-    const mixed = []
-    const monday = []
-    const tuesday = []
-    characters.forEach(c => {
-      let mon = false
-      let tues = false
-      c.liveGames.forEach(g => {
-        if (g.day === 'Monday') {
-          mon = true
-        } else if (g.day === 'Tuesday') {
-          tues = true
-        }
-      })
-      if (mon && tues) {
-        mixed.push(c)
-      } else if (mon) {
-        monday.push(c)
-      } else if (tues) {
-        tuesday.push(c)
-      }
-    })
+    // const mixed = []
+    // const monday = []
+    // const tuesday = []
+    // characters.forEach(c => {
+    //   let mon = false
+    //   let tues = false
+    //   c.liveGames.forEach(g => {
+    //     if (g.day === 'Monday') {
+    //       mon = true
+    //     } else if (g.day === 'Tuesday') {
+    //       tues = true
+    //     }
+    //   })
+    //   if (mon && tues) {
+    //     mixed.push(c)
+    //   } else if (mon) {
+    //     monday.push(c)
+    //   } else if (tues) {
+    //     tuesday.push(c)
+    //   }
+    // })
     AppState.sorted = {
       characters: {
-        mixed: mixed,
-        monday: monday,
-        tuesday: tuesday
+        mixed: characters
+        // monday: monday,
+        // tuesday: tuesday
       },
       games: games,
       full: [],
       roster: []
     }
     for (let i = 0; i < games.length; i++) {
-      this.buildGames('monday', i)
-      this.buildGames('tuesday', i)
+      // this.buildGames('monday', i)
+      // this.buildGames('tuesday', i)
       this.buildGames('mixed', i)
     }
     console.log(AppState.sorted)
@@ -132,22 +132,28 @@ class GamesService {
     })
   }
 
-  async fuckedUp() {
+  async randomizeGames() {
     await charactersService.getCharacters()
     await this.getGames()
-    const characters = AppState.characters.filter(c => c.liveGames[0])
+    const characters = AppState.characters
     const games = AppState.games
+
     for (let i = 0; i < characters.length; i++) {
+      characters[i].liveGames = []
+      let num = Math.floor(Math.random() * games.length + 3)
+      if (num > games.length) {
+        num = games.length
+      }
       let currentIndex = games.length; let randomIndex
       while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex)
         currentIndex--;
-
         [games[currentIndex], games[randomIndex]] = [
           games[randomIndex], games[currentIndex]]
       }
-      for (let k = 0; k < games.length; k++) {
-        characters[i].liveGames[k].choice = games[k]
+      for (let k = 0; k < num; k++) {
+        games[k].choice = k
+        characters[i].liveGames.push(games[k])
       }
       AppState.activeCharacter = characters[i]
       await charactersService.editCharacter(characters[i])

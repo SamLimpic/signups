@@ -31,7 +31,8 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   // NOTE if there is something you want to do once the user is authenticated, place that here
   // await accountService.updateTimeStamp(AppState.account)
   await charactersService.getCharactersByCreatorId(AppState.account.id)
-  // await gamesService.fuckedUp()
+  await gamesService.randomizeGames()
+  await gamesService.buildRoster()
 })
 
 async function refreshAuthToken(config) {

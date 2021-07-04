@@ -105,12 +105,15 @@
         <h3 class="font-xl">
           Select each game in your preferred order, or remove any you aren't interested in
         </h3>
+        <h4 class="font-lg">
+          The more games you select, the better chance you have at playing!
+        </h4>
         <h4 class="font-lg mb-1">
           <i>Current Total: {{ state.games.length }}</i>
         </h4>
         <div class="row justify-content-center">
-          <div class="col-sm-3 col-5 text-right">
-            <div class="dropdown">
+          <div class="col-sm-4 col-6 text-right">
+            <div class="dropdown dropright">
               <button
                 id="sort"
                 class="btn btn-lg btn-light font-xl dropdown-toggle py-1 px-3"
@@ -121,7 +124,7 @@
               >
                 Sort
               </button>
-              <div class="dropdown-menu shadow m-0 p-0 mb-2" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-menu shadow m-0 p-0 ml-2" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item font-md hoverable bg-primary border text-light text-shadow pl-2" id="reset" @click="sort('reset')">
                   <i class="fas fa-dungeon pr-2"></i> Reset</a>
                 <a class="dropdown-item drop-light font-md hoverable text-primary pl-2" id="day" @click="sort('day')" v-if="state.day === true">
@@ -140,7 +143,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-3 col-5 text-left">
+          <div class="col-sm-4 col-6 text-left">
             <button type="button" id="show" class="btn btn-lg btn-primary font-xl sorted py-1 px-3">
               Show All
             </button>

@@ -4,7 +4,7 @@
     <div class="row justify-content-end position-relative bg-light rounded shadow h-100 m-sm-2 mx-3 mb-2 p-sm-2 p-1">
       <div :class="{'right cover': !liveProp, 'right-sm cover-sm': liveProp}" class="right col-12 text-left cover pt-2">
         <h3 class="font-sm m-0" v-if="liveProp">
-          [ {{ gameProp.day }} ]
+          [ Choice {{ indexProp }} ]
         </h3>
         <h3 class="font-sm m-0" v-else>
           [ {{ gameProp.size }} Players ]
@@ -20,19 +20,19 @@
           {{ gameProp.description }}
         </h6>
       </div>
-      <div :class="{'btn-cover': !liveProp || gameProp.players[0]}" class="col-12 position-relative">
+      <div class="col-12 btn-cover position-relative">
         <div class="dropdown dropup btn-right">
           <button id="players"
-                  class="btn btn-info dropdown-toggle font-md py-1"
+                  :class="{'disable': !gameProp.players[0]}"
+                  class="btn btn-info font-md w-100 py-1"
                   type="button"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  v-if="gameProp.players[0]"
           >
-            Players
+            {{ gameProp.size }} Players
           </button>
-          <div class="dropdown-menu dropdown-menu-right m-0 p-0 mb-2" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-menu dropdown-menu-right m-0 p-0 my-2" aria-labelledby="dropdownMenuButton" v-if="gameProp.players[0]">
             <CharacterDrop v-for="(c) in gameProp.players" :key="c.id" :drop-prop="c.name" :live-prop="!state.loading" />
           </div>
         </div>
@@ -44,11 +44,7 @@
         </button>
       </div>
       <div class="icons rounded shadow px-2 pt-2 pb-1 text-left">
-        <p class="text-primary pl-1 m-0" v-if="liveProp">
-          <i class="fas fa-dice-d20 font-lg pr-2"></i>
-          <span class="font-sm pr-1">Choice {{ indexProp }} </span>
-        </p>
-        <p class="text-primary pl-1 m-0" v-else-if="gameProp.live">
+        <p class="text-primary pl-1 m-0" v-if="gameProp.live">
           <i class="far fa-clock font-lg pr-2"></i>
           <span class="font-sm pr-1">{{ gameProp.day }} </span>
         </p>
@@ -159,6 +155,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.disable {
+  pointer-events: none;
+  cursor: none;
+  opacity: .75;
+}
 .icons {
   position: absolute;
   font-family: "Aladin", cursive;

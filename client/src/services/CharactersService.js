@@ -42,13 +42,13 @@ class CharactersService {
   }
 
   async editCharacter(edit) {
-    await valuesService.getValues()
-    const char = AppState.activeCharacter
-    const exp = AppState.values.base
-    if (char.experience < exp) {
-      char.experience = exp
-    }
-    this.setLevel(edit.experience)
+    // await valuesService.getValues()
+    // const char = AppState.activeCharacter
+    // const exp = AppState.values.base
+    // if (char.experience < exp) {
+    //   char.experience = exp
+    // }
+    // this.setLevel(edit.experience)
     const res = await api.put(`api/characters/${edit.id}`, AppState.activeCharacter)
     AppState.activeCharacter = res.data
   }
