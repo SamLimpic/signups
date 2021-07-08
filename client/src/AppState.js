@@ -4,6 +4,7 @@ import { reactive } from 'vue'
 export const AppState = reactive({
   // ANCHOR Base Variables
   profile: false,
+  built: false,
 
   // ANCHOR Base Objects
   user: {},
@@ -12,6 +13,7 @@ export const AppState = reactive({
   activeCharacter: {},
   activeGame: {},
   sorted: {},
+  roster: {},
 
   // ANCHOR Base Arrays
   characters: [],
@@ -19,12 +21,15 @@ export const AppState = reactive({
   liveGames: [],
   choices: [],
   graveyard: [],
+  total: [],
 
   // ANCHOR Dictionaries
 
   count: {
     game: 0,
     choice: 0,
-    removed: 0
+    removed: 0,
+    runs: 0,
+    check: 0
   }
 })

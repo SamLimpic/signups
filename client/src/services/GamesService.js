@@ -51,53 +51,99 @@ class GamesService {
   async buildRoster() {
     await charactersService.getCharacters()
     await this.getGames()
-    this.sortRoster()
-  }
-
-  sortRoster() {
     const characters = AppState.characters.filter(c => c.liveGames[0])
     const games = AppState.games
-    // const mixed = []
-    // const monday = []
-    // const tuesday = []
-    // characters.forEach(c => {
-    //   let mon = false
-    //   let tues = false
-    //   c.liveGames.forEach(g => {
-    //     if (g.day === 'Monday') {
-    //       mon = true
-    //     } else if (g.day === 'Tuesday') {
-    //       tues = true
-    //     }
-    //   })
-    //   if (mon && tues) {
-    //     mixed.push(c)
-    //   } else if (mon) {
-    //     monday.push(c)
-    //   } else if (tues) {
-    //     tuesday.push(c)
-    //   }
-    // })
     AppState.sorted = {
-      characters: {
-        mixed: characters
-        // monday: monday,
-        // tuesday: tuesday
-      },
+      characters: characters,
       games: games,
       full: [],
       roster: []
     }
+    AppState.count.game = 0
+    games.forEach(g => {
+      AppState.count.game += g.size
+    })
     for (let i = 0; i < games.length; i++) {
-      // this.buildGames('monday', i)
-      // this.buildGames('tuesday', i)
-      this.buildGames('mixed', i)
+      this.buildGames(i)
     }
-    console.log(AppState.sorted)
+    await this.checkRoster()
   }
 
-  buildGames(str, num) {
-    const characters = AppState.sorted.characters[str]
+  // async sortRoster() {
+  //   const characters = AppState.characters.filter(c => c.liveGames[0])
+  //   const games = AppState.games
+  //   // const mixed = []
+  //   // const monday = []
+  //   // const tuesday = []
+  //   // characters.forEach(c => {
+  //   //   let mon = false
+  //   //   let tues = false
+  //   //   c.liveGames.forEach(g => {
+  //   //     if (g.day === 'Monday') {
+  //   //       mon = true
+  //   //     } else if (g.day === 'Tuesday') {
+  //   //       tues = true
+  //   //     }
+  //   //   })
+  //   //   if (mon && tues) {
+  //   //     mixed.push(c)
+  //   //   } else if (mon) {
+  //   //     monday.push(c)
+  //   //   } else if (tues) {
+  //   //     tuesday.push(c)
+  //   //   }
+  //   // })
+  //   AppState.sorted = {
+  //     characters: characters,
+  //     games: games,
+  //     full: [],
+  //     roster: []
+  //   }
+  //   for (let i = 0; i < AppState.sorted.games.length; i++) {
+  //     this.buildGames(i)
+  //   }
+  //   await this.checkRoster()
+  // }
+
+  async checkRoster() {
+    AppState.count.runs++
+    AppState.choices.push(AppState.sorted)
+    if (AppState.count.runs % AppState.count.game === 0) {
+      AppState.count.check++
+      AppState.choices = AppState.choices.filter(s => s.games.length <= AppState.count.check)
+    }
+    AppState.choices.forEach(s => {
+      if (s.games.length === AppState.count.check) {
+        AppState.roster = s
+        AppState.built = true
+        AppState.choices.forEach(c => {
+          if (c.characters.length < AppState.roster.characters.length) {
+            AppState.roster = c
+          }
+        })
+      }
+    })
+    console.log(AppState.roster, AppState.count.check)
+    if (!AppState.built) {
+      console.log('REROLL')
+      console.log(AppState.choices, AppState.count)
+      await this.buildRoster()
+    } else {
+      console.log('FINAL ROSTER')
+      console.log(AppState.choices, AppState.roster)
+      // const round = {
+      //   characters: AppState.roster.characters.length,
+      //   games: AppState.roster.games.length
+      // }
+      // AppState.total = JSON.parse(window.localStorage.getItem('total'))
+      // AppState.total.push(round)
+      // window.localStorage.setItem('total', JSON.stringify(AppState.total))
+      // location.reload()
+    }
+  }
+
+  buildGames(num) {
+    const characters = AppState.sorted.characters
     const roster = AppState.sorted.roster
     const full = AppState.sorted.full
     const games = AppState.sorted.games
@@ -121,7 +167,7 @@ class GamesService {
       holding.forEach(h => {
         if (g.size > g.players.length) {
           g.players.push(h)
-          AppState.sorted.characters[str] = AppState.sorted.characters[str].filter(c => c.id !== h.id)
+          AppState.sorted.characters = AppState.sorted.characters.filter(c => c.id !== h.id)
           roster.push(h)
         }
       })
