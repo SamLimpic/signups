@@ -8,7 +8,7 @@
         <h3 class="font-xl text-center mt-md-1">
           Need to look over this week's Games?
         </h3>
-        <CreateGame v-for="(g, index) in state.activeGames" :key="index" :index-prop="index" />
+        <CreateGame v-for="(g, index) in state.liveGames" :key="index" :index-prop="index" />
       </div>
     </div>
     <div class="row justify-content-around" v-else>
@@ -36,16 +36,16 @@ export default {
     const route = useRoute()
     const state = reactive({
       account: computed(() => AppState.account),
-      activeGames: computed(() => AppState.activeGames),
+      liveGames: computed(() => AppState.liveGames),
       loading: true
     })
     onMounted(async() => {
       try {
         await gamesService.getGamesByCreatorId(route.params.id)
-        if (AppState.activeGames.length === 1) {
-          AppState.activeGames = [...{}]
-        } else if (!AppState.activeGames[0]) {
-          AppState.activeGames = [{}, {}]
+        if (AppState.liveGames.length === 1) {
+          AppState.liveGames = [...{}]
+        } else if (!AppState.liveGames[0]) {
+          AppState.liveGames = [{}, {}]
         }
         await valuesService.getValues()
         state.loading = false

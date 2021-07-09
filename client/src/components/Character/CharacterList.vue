@@ -2,14 +2,14 @@
   <!-- ANCHOR Renders available Characters -->
   <div class="col-lg-3 col-md-4 col-sm-5 col-6 px-md-3 p-2">
     <div class="row justify-content-between bg-light rounded shadow text-left hoverable mx-0 mb-sm-3 pt-3" @click="select(charProp)" v-if="!liveProp">
-      <div class="col-12 position-relative mb-2 pt-sm-0 pt-1">
+      <div class="character col-12 position-relative mb-2 pt-sm-0 pt-1">
         <h5 class="text-overlay text-muted font-md">
           Level {{ charProp.level }}
         </h5>
         <h5 class="exp-overlay text-muted font-md">
           {{ charProp.experience }} <span class="font-xs">EXP</span>
         </h5>
-        <h3 class="font-xl text-center m-0">
+        <h3 class="font-xl text-center m-0 pt-sm-3 pt-2">
           <u>{{ charProp.name }}</u>
         </h3>
         <h4 class="font-md text-center">
@@ -30,7 +30,7 @@
         <h5 class="exp-overlay text-muted font-md">
           {{ charProp.experience }} <span class="font-xs">EXP</span>
         </h5>
-        <i class="live-overlay fas fa-skull text-danger font-lg hoverable"></i>
+        <i class="live-overlay fas fa-skull text-danger font-lg"></i>
         <i class="fas fa-skull"></i>
         <h3 class="font-xl text-center m-0 pt-sm-3 pt-2">
           <u>{{ charProp.name }}</u>
@@ -54,6 +54,7 @@
           {{ charProp.experience }} <span class="font-xs">EXP</span>
         </h5>
         <i class="live-overlay fas fa-dice-d20 font-lg hoverable" v-if="charProp.liveGames[0]"></i>
+        <i class="live-overlay fas fa-dice-d20 text-success font-lg hoverable" v-else-if="charProp.live"></i>
         <i class="btn-overlay fas fa-scroll font-lg hoverable" @click="edit(charProp)"></i>
         <h3 class="font-xl text-center m-0 pt-sm-3 pt-2">
           <u>{{ charProp.name }}</u>

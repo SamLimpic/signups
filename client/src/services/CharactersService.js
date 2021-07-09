@@ -1,5 +1,6 @@
 import { AppState } from '../AppState'
 import { api } from './AxiosService'
+import { gamesService } from './GamesService'
 import { valuesService } from './ValuesService'
 
 class CharactersService {
@@ -21,11 +22,19 @@ class CharactersService {
   async getCharactersByCreatorId(id) {
     const res = await api.get(`api/characters?creatorId=${id}`)
     AppState.characters = res.data.filter(c => !c.dead)
-    AppState.characters.forEach(c => {
-      if (c.liveGames[0]) {
-        AppState.activeCharacter = c
+    for (let i = 0; i < AppState.characters.length; i++) {
+      const character = AppState.characters[i]
+      if (character.liveGames[0]) {
+        AppState.activeCharacter = character
       }
-    })
+      if (character.live) {
+        for (let j = 0; j < character.games.length; j++) {
+          const game = character.games[j]
+          await gamesService.getGameById(game)
+        }
+        AppState.activeCharacter = character
+      }
+    }
   }
 
   async getGraveyardByCreatorId(id) {
@@ -42,15 +51,19 @@ class CharactersService {
   }
 
   async editCharacter(edit) {
-    // await valuesService.getValues()
-    // const char = AppState.activeCharacter
-    // const exp = AppState.values.base
-    // if (char.experience < exp) {
-    //   char.experience = exp
-    // }
-    // this.setLevel(edit.experience)
+    await valuesService.getValues()
+    const char = AppState.activeCharacter
+    const exp = AppState.values.base
+    if (char.experience < exp) {
+      char.experience = exp
+    }
+    this.setLevel(edit.experience)
     const res = await api.put(`api/characters/${edit.id}`, AppState.activeCharacter)
     AppState.activeCharacter = res.data
+  }
+
+  async updateCharacter(update) {
+    await api.put(`api/characters/${update.id}`, update)
   }
 
   async killCharacter(id) {

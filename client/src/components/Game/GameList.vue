@@ -3,8 +3,11 @@
   <div :id="gameProp.id + '-card'" class="col-md-6 col-12 px-md-3 py-md-4 px-2 py-3">
     <div class="row justify-content-end position-relative bg-light rounded shadow h-100 m-sm-2 mx-3 mb-2 p-sm-2 p-1">
       <div :class="{'right cover': !liveProp, 'right-sm cover-sm': liveProp}" class="right col-12 text-left cover pt-2">
-        <h3 class="font-sm m-0" v-if="liveProp">
+        <h3 class="font-sm m-0" v-if="liveProp && indexProp">
           [ Choice {{ indexProp }} ]
+        </h3>
+        <h3 class="font-sm m-0" v-else-if="liveProp">
+          [ {{ state.activeCharacter.name }}: {{ state.activeCharacter.race }} {{ state.activeCharacter.class }} ]
         </h3>
         <h3 class="font-sm m-0" v-else>
           [ {{ gameProp.size }} Players ]

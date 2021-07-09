@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="row justify-content-around" v-else-if="state.account.live">
-      <div class="col-12 p-md-3 px-2 pt-2">
+      <div class="col-12 p-md-3 px-2 pt-2" v-if="state.activeCharacter.liveGames[0]">
         <h2 class="font-xxl m-0">
           <u>Here are your final selections!</u>
         </h2>
@@ -19,6 +19,17 @@
         </h3>
         <div class="row justify-content-around mt-1">
           <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
+        </div>
+      </div>
+      <div class="col-12 p-md-3 px-2 pt-2" v-if="state.activeCharacter.live">
+        <h2 class="font-xxl">
+          <u>{{ state.activeCharacter.name }} the {{ state.activeCharacter.race }} {{ state.activeCharacter.class }} has been selected!</u>
+        </h2>
+        <h3 class="font-xl m-0">
+          Here's {{ state.activeCharacter.name }}'s game this week
+        </h3>
+        <div class="row justify-content-around">
+          <GameList :game-prop="state.activeGame" :live-prop="!state.loading" />
         </div>
       </div>
     </div>
@@ -184,6 +195,7 @@ export default {
       account: computed(() => AppState.account),
       characters: computed(() => AppState.characters),
       activeCharacter: computed(() => AppState.activeCharacter),
+      activeGame: computed(() => AppState.activeGame),
       games: computed(() => AppState.games),
       liveGames: computed(() => AppState.liveGames),
       choices: computed(() => AppState.choices),

@@ -22,8 +22,8 @@ class GamesService {
   async getGamesByCreatorId(id) {
     const res = await api.get(`api/games?creatorId=${id}`)
     AppState.games = res.data
-    AppState.activeGames = AppState.games.filter(g => g.live === true)
-    AppState.activeGames.forEach(g => {
+    AppState.liveGames = AppState.games.filter(g => g.live === true)
+    AppState.liveGames.forEach(g => {
       g.date = g.date.substring(0, 10)
     })
   }
@@ -32,15 +32,19 @@ class GamesService {
     await api.post('api/games', data)
   }
 
-  async editGame(id, edit) {
+  async editGame(edit) {
     const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const date = new Date(edit.date.substring(0, 10).replace('-', ', '))
     const day = date.getDay()
     edit.day = week[day]
-    const res = await api.put(`api/games/${id}`, edit)
-    let game = AppState.activeGames.find(g => g.id === id)
+    const res = await api.put(`api/games/${edit.id}`, edit)
+    let game = AppState.liveGames.find(g => g.id === edit.id)
     game = res.data
     game.date = game.date.substring(0, 10)
+  }
+
+  async updateGame(update) {
+    await api.put(`api/games/${update.id}`, update)
   }
 
   async deleteGame(id) {
@@ -57,7 +61,7 @@ class GamesService {
       characters: characters,
       games: games,
       full: [],
-      roster: []
+      selected: []
     }
     AppState.count.game = 0
     games.forEach(g => {
@@ -69,41 +73,41 @@ class GamesService {
     await this.checkRoster()
   }
 
-  // async sortRoster() {
-  //   const characters = AppState.characters.filter(c => c.liveGames[0])
-  //   const games = AppState.games
-  //   // const mixed = []
-  //   // const monday = []
-  //   // const tuesday = []
-  //   // characters.forEach(c => {
-  //   //   let mon = false
-  //   //   let tues = false
-  //   //   c.liveGames.forEach(g => {
-  //   //     if (g.day === 'Monday') {
-  //   //       mon = true
-  //   //     } else if (g.day === 'Tuesday') {
-  //   //       tues = true
-  //   //     }
-  //   //   })
-  //   //   if (mon && tues) {
-  //   //     mixed.push(c)
-  //   //   } else if (mon) {
-  //   //     monday.push(c)
-  //   //   } else if (tues) {
-  //   //     tuesday.push(c)
-  //   //   }
-  //   // })
-  //   AppState.sorted = {
-  //     characters: characters,
-  //     games: games,
-  //     full: [],
-  //     roster: []
-  //   }
-  //   for (let i = 0; i < AppState.sorted.games.length; i++) {
-  //     this.buildGames(i)
-  //   }
-  //   await this.checkRoster()
-  // }
+  buildGames(num) {
+    const characters = AppState.sorted.characters
+    const selected = AppState.sorted.selected
+    const full = AppState.sorted.full
+    const games = AppState.sorted.games
+    games.forEach(g => {
+      const holding = []
+      characters.forEach(c => {
+        if (c.liveGames.length > num) {
+          const game = c.liveGames.find(lg => lg.choice === num)
+          if (game.id === g.id) {
+            holding.push(c)
+          }
+        }
+      })
+      let currentIndex = holding.length; let randomIndex
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--
+        [holding[currentIndex], holding[randomIndex]] = [
+          holding[randomIndex], holding[currentIndex]]
+      }
+      holding.forEach(h => {
+        if (g.size > g.players.length) {
+          g.players.push(h)
+          AppState.sorted.characters = AppState.sorted.characters.filter(c => c.id !== h.id)
+          selected.push(h)
+        }
+      })
+      if (g.size === g.players.length) {
+        AppState.sorted.games = AppState.sorted.games.filter(f => f.id !== g.id)
+        full.push(g)
+      }
+    })
+  }
 
   async checkRoster() {
     AppState.count.runs++
@@ -129,8 +133,9 @@ class GamesService {
       console.log(AppState.choices, AppState.count)
       await this.buildRoster()
     } else {
-      console.log('FINAL ROSTER')
-      console.log(AppState.choices, AppState.roster)
+      await this.updateRoster()
+      // console.log('FINAL ROSTER')
+      // console.log(AppState.choices, AppState.roster)
       // const round = {
       //   characters: AppState.roster.characters.length,
       //   games: AppState.roster.games.length
@@ -142,40 +147,40 @@ class GamesService {
     }
   }
 
-  buildGames(num) {
-    const characters = AppState.sorted.characters
-    const roster = AppState.sorted.roster
-    const full = AppState.sorted.full
-    const games = AppState.sorted.games
-    games.forEach(g => {
-      const holding = []
-      characters.forEach(c => {
-        if (c.liveGames.length > num) {
-          const game = c.liveGames.find(lg => lg.choice === num)
-          if (game.id === g.id) {
-            holding.push(c)
-          }
-        }
-      })
-      let currentIndex = holding.length; let randomIndex
-      while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex)
-        currentIndex--
-        [holding[currentIndex], holding[randomIndex]] = [
-          holding[randomIndex], holding[currentIndex]]
-      }
-      holding.forEach(h => {
-        if (g.size > g.players.length) {
-          g.players.push(h)
-          AppState.sorted.characters = AppState.sorted.characters.filter(c => c.id !== h.id)
-          roster.push(h)
-        }
-      })
-      if (g.size === g.players.length) {
-        AppState.sorted.games = AppState.sorted.games.filter(f => f.id !== g.id)
-        full.push(g)
+  async updateRoster() {
+    AppState.roster.full.forEach(g => {
+      for (let i = 0; i < g.players.length; i++) {
+        const character = g.players[i]
+        character.games.push(g.id)
+        character.liveGames = []
+        character.live = true
       }
     })
+    AppState.roster.characters.forEach(c => {
+      c.liveGames = []
+      c.live = false
+    })
+    await this.pushRoster()
+    console.log('FINAL ROSTER')
+    console.log(AppState.choices, AppState.roster)
+  }
+
+  async pushRoster() {
+    const games = AppState.roster.full
+    const selected = AppState.roster.selected
+    const rejected = AppState.roster.characters
+
+    for (let i = 0; i < games.length; i++) {
+      const players = games[i].players
+      await this.updateGame(games[i])
+      for (let j = 0; j < players.length; j++) {
+        const character = selected.find(c => c.id === players[j].id)
+        await charactersService.updateCharacter(character)
+      }
+    }
+    for (let i = 0; i < rejected.length; i++) {
+      await charactersService.updateCharacter(rejected[i])
+    }
   }
 
   async randomizeGames() {
@@ -184,8 +189,13 @@ class GamesService {
     const characters = AppState.characters
     const games = AppState.games
 
+    for (let i = 0; i < games.length; i++) {
+      games[i].players = []
+      await this.updateGame(games[i])
+    }
     for (let i = 0; i < characters.length; i++) {
       characters[i].liveGames = []
+      characters[i].games = []
       let num = Math.floor(Math.random() * games.length + 3)
       if (num > games.length) {
         num = games.length
@@ -199,10 +209,11 @@ class GamesService {
       }
       for (let k = 0; k < num; k++) {
         games[k].choice = k
+        games[k].players = []
         characters[i].liveGames.push(games[k])
       }
       AppState.activeCharacter = characters[i]
-      await charactersService.editCharacter(characters[i])
+      await charactersService.updateCharacter(characters[i])
     }
   }
 }

@@ -22,19 +22,28 @@
         <h1 class="font-xxl m-0">
           <u>Welcome {{ state.account.name }}</u>
         </h1>
-        <h2 class="font-xl">
+        <div class="row justify-content-around" v-if="state.account.live && state.activeCharacter.liveGames[0]">
+          <div class="col-12">
+            <h2 class="font-xl pt-2">
+              Here are your selections for this week!
+            </h2>
+          </div>
+          <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
+        </div>
+        <div class="row justify-content-around" v-else-if="state.account.live">
+          <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
+          <div class="col-12">
+            <h3 class="font-xl m-0 pt-2">
+              You've been selected for a game this {{ state.activeGame.day }}!
+            </h3>
+          </div>
+          <GameList :game-prop="state.activeGame" :live-prop="!state.loading" />
+        </div>
+        <h2 class="font-xl pt-2">
           Here are your registered characters!
         </h2>
         <div class="row justify-content-around">
           <CharacterList v-for="c in state.characters" :key="c.id" :char-prop="c" :live-prop="state.profile" />
-        </div>
-      </div>
-      <div class="col-12 p-md-3 px-2 pt-2" v-if="state.account.live">
-        <h2 class="font-xl">
-          Here are your selections for this week!
-        </h2>
-        <div class="row justify-content-around">
-          <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
         </div>
       </div>
     </div>
@@ -54,6 +63,7 @@ export default {
       account: computed(() => AppState.account),
       characters: computed(() => AppState.characters),
       activeCharacter: computed(() => AppState.activeCharacter),
+      activeGame: computed(() => AppState.activeGame),
       graveyard: computed(() => AppState.graveyard),
       profile: computed(() => AppState.profile),
       loading: true

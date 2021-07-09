@@ -10,6 +10,7 @@ export const Character = new Schema(
     experience: { type: Number, required: true },
     level: { type: Number, required: true },
     imgUrl: { type: String, required: true, default: 'http://www.geocities.ws/Area51/Orion/3107/Lance21.jpg' },
+    live: { type: Boolean, required: true, default: false },
     dead: { type: Boolean, required: true, default: false },
     killDate: { type: Date },
     games: { type: Array },
