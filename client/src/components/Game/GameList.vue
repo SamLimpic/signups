@@ -18,7 +18,10 @@
               <i class="fas fa-dice-d20 hoverable"></i>
             </button>
             <div class="dropdown-menu m-0 p-0 mx-3" aria-labelledby="dropdownMenuButton">
-              <CharacterDrop v-for="(c) in state.characters" :key="c.id" :drop-prop="c.name" :live-prop="!state.loading" />
+              <a class="dropdown-item font-lg bg-info text-light text-center disabled">
+                <u>Select Character</u>
+              </a>
+              <CharacterDrop v-for="c in state.characters" :key="c.id" :char-prop="c" :live-prop="!state.loading" />
             </div>
           </div>
           <i>{{ state.activeCharacter.name }}</i>
@@ -120,7 +123,8 @@ export default {
       games: computed(() => AppState.games),
       characters: computed(() => AppState.characters),
       choice: computed(() => AppState.count.choice),
-      removed: computed(() => AppState.count.removed)
+      removed: computed(() => AppState.count.removed),
+      loading: true
     })
     onMounted(async() => {
 
@@ -165,13 +169,6 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       }
-      // changeCharacter(character) {
-      //   try {
-      //     let game =
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
     }
   },
   components: {}
@@ -205,7 +202,6 @@ export default {
   position: absolute;
 }
 .dropdown-menu {
-  pointer-events: none;
   min-width: 7rem;
 }
 .icon-overlay {

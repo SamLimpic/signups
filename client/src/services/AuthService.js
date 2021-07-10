@@ -7,6 +7,7 @@ import { api } from './AxiosService'
 import { charactersService } from './CharactersService'
 import { gamesService } from './GamesService'
 import { socketService } from './SocketService'
+import { valuesService } from './ValuesService'
 
 export const AuthService = initialize({
   domain,
@@ -31,6 +32,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   // NOTE if there is something you want to do once the user is authenticated, place that here
   // await accountService.updateTimeStamp(AppState.account)
   await charactersService.getCharactersByCreatorId(AppState.account.id)
+  await charactersService.getLive()
   // await gamesService.randomizeGames()
   // await gamesService.buildRoster()
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="games flex-grow-1 container-fluid align-items-center text-center position-relative m-3">
     <i class="fas fa-undo text-dark" v-if="state.game === 2" @click="reload"></i>
-    <div class="row justify-content-around" v-if="state.loading">
+    <div class="row justify-content-around" v-if="state.loading || state.load">
       <div class="col-12 p-md-3 px-2 pt-2">
         <h2 class="font-xxl">
           <u>Accessing Current Game Data</u>
@@ -9,18 +9,7 @@
         <i class="fas fa-dice-d20 text-warning fa-spin icon mt-3 mb-auto"></i>
       </div>
     </div>
-    <div class="row justify-content-around" v-else-if="state.account.live">
-      <div class="col-12 p-md-3 px-2 pt-2" v-if="state.activeCharacter.liveGames[0]">
-        <h2 class="font-xxl m-0">
-          <u>Here are your final selections!</u>
-        </h2>
-        <h3 class="font-xl m-0">
-          Check back Sunday for the official roster
-        </h3>
-        <div class="row justify-content-around mt-1">
-          <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
-        </div>
-      </div>
+    <div class="row justify-content-around" v-else>
       <div class="col-12 p-md-3 px-2 pt-2" v-if="state.activeCharacter.live">
         <h2 class="font-xxl">
           <u>{{ state.activeCharacter.name }} the {{ state.activeCharacter.race }} {{ state.activeCharacter.class }} has been selected!</u>
@@ -32,9 +21,18 @@
           <GameList :game-prop="state.activeGame" :live-prop="!state.loading" />
         </div>
       </div>
-    </div>
-    <div class="row justify-content-around" v-else>
-      <div class="col-xl-8 col-lg-9 col-md-10 col-11 p-md-3 px-2 pt-2" v-if="!state.characters[0]">
+      <div class="col-12 p-md-3 px-2 pt-2" v-else-if="state.activeCharacter.liveGames[0]">
+        <h2 class="font-xxl m-0">
+          <u>Here are your final selections!</u>
+        </h2>
+        <h3 class="font-xl m-0">
+          Check back Sunday for the official roster
+        </h3>
+        <div class="row justify-content-around mt-1">
+          <GameList v-for="(g, index) in state.activeCharacter.liveGames" :key="g.id" :game-prop="g" :index-prop="index + 1" :live-prop="!state.loading" />
+        </div>
+      </div>
+      <div class="col-xl-8 col-lg-9 col-md-10 col-11 p-md-3 px-2 pt-2" v-else-if="!state.characters[0]">
         <h2 class="font-xxl">
           <u>You don't have any characters to play with!</u>
         </h2>
@@ -185,6 +183,7 @@ import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { gamesService } from '../services/GamesService'
 import Notification from '../utils/Notification'
+import { charactersService } from '../services/CharactersService'
 import { valuesService } from '../services/ValuesService'
 
 export default {
@@ -202,6 +201,8 @@ export default {
       choice: computed(() => AppState.count.choice),
       removed: computed(() => AppState.count.removed),
       game: computed(() => AppState.count.game),
+      load: computed(() => AppState.load),
+      loading: true,
       show: {
         size: false,
         day: false,
@@ -213,15 +214,14 @@ export default {
       day: true,
       week: 4,
       masked: false,
-      outdoor: false,
-      loading: true
+      outdoor: false
     })
     onMounted(async() => {
       try {
-        await gamesService.getGames()
         await valuesService.getValues()
+        await gamesService.getGames()
         AppState.liveGames = AppState.games
-        setTimeout(function() { state.loading = false }, 1000)
+        setTimeout(function() { state.loading = false }, AppState.timer)
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
       }
@@ -230,7 +230,7 @@ export default {
       state,
       reload() {
         try {
-          setTimeout(function() { location.reload() }, 1000)
+          setTimeout(function() { location.reload() }, AppState.timer)
           Notification.toast('Mock the Dragon at your peril', 'warning')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')

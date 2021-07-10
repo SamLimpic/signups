@@ -5,6 +5,8 @@ export const AppState = reactive({
   // ANCHOR Base Variables
   profile: false,
   built: false,
+  load: false,
+  timer: 1500,
 
   // ANCHOR Base Objects
   user: {},

@@ -1,11 +1,22 @@
 <template>
   <div class="account flex-grow-1 container-fluid align-items-center text-center m-3">
-    <div class="row justify-content-around" v-if="state.loading">
+    <div class="row justify-content-around" v-if="state.loading || state.load">
       <div class="col-12 p-md-3 px-2 pt-2">
         <h2 class="font-xxl">
           <u>Accessing Account Data</u>
         </h2>
         <i class="fas fa-dice-d20 text-warning fa-spin icon mt-3 mb-auto"></i>
+      </div>
+    </div>
+    <div class="row justify-content-around" v-else-if="state.create">
+      <div class="col-12 p-md-3 px-2 pt-2">
+        <h2 class="font-xxl">
+          <u>Register your new Character</u>
+        </h2>
+        <button type="button" class="btn btn-info font-lg mb-3" @click="create">
+          Back to Profile
+        </button>
+        <CreateCharacter />
       </div>
     </div>
     <div class="row justify-content-around position-relative" v-else>
@@ -22,6 +33,9 @@
         <h1 class="font-xxl m-0">
           <u>Welcome {{ state.account.name }}</u>
         </h1>
+        <button type="button" class="btn btn-info font-lg mt-2" @click="create">
+          Register New Character
+        </button>
         <div class="row justify-content-around" v-if="state.account.live && state.activeCharacter.liveGames[0]">
           <div class="col-12">
             <h2 class="font-xl pt-2">
@@ -55,6 +69,7 @@ import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { charactersService } from '../services/CharactersService'
 import { useRoute } from 'vue-router'
+import { valuesService } from '../services/ValuesService'
 export default {
   name: 'Account',
   setup() {
@@ -66,28 +81,36 @@ export default {
       activeGame: computed(() => AppState.activeGame),
       graveyard: computed(() => AppState.graveyard),
       profile: computed(() => AppState.profile),
-      loading: true
+      load: computed(() => AppState.load),
+      loading: true,
+      create: false
     })
     onMounted(async() => {
       try {
+        setTimeout(function() { state.loading = false; AppState.profile = true }, AppState.timer)
         await charactersService.getCharactersByCreatorId(route.params.id)
         await charactersService.getGraveyardByCreatorId(route.params.id)
+        await charactersService.getLive()
+        await valuesService.getValues()
         if (state.graveyard[0]) {
           AppState.graveyard.forEach(c => {
             AppState.characters.push(c)
           })
         }
-        setTimeout(function() { state.loading = false; AppState.profile = true }, 1000)
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
       }
     })
     return {
       state,
-      reload() {
+      create() {
         try {
-          setTimeout(function() { location.reload() }, 1000)
-          Notification.toast('Mock the Dragon at your peril', 'warning')
+          if (state.create) {
+            location.reload()
+          } else {
+            AppState.activeCharacter = {}
+            state.create = true
+          }
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

@@ -47,7 +47,6 @@ import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { AuthService } from '../services/AuthService'
 import Notification from '../utils/Notification'
-import { gamesService } from '../services/GamesService'
 
 export default {
   name: 'Home',
@@ -58,7 +57,7 @@ export default {
     })
     onMounted(async() => {
       AppState.profile = false
-      setTimeout(function() { state.loading = false }, 1500)
+      setTimeout(function() { state.loading = false }, AppState.timer)
     })
     return {
       state,

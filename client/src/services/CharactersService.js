@@ -22,16 +22,19 @@ class CharactersService {
   async getCharactersByCreatorId(id) {
     const res = await api.get(`api/characters?creatorId=${id}`)
     AppState.characters = res.data.filter(c => !c.dead)
+    AppState.characters.forEach(c => {
+      if (c.liveGames[0] || c.live) {
+        AppState.activeCharacter = c
+      }
+    })
+  }
+
+  async getLive() {
     for (let i = 0; i < AppState.characters.length; i++) {
       const character = AppState.characters[i]
-      if (character.liveGames[0]) {
-        AppState.activeCharacter = character
-      }
       if (character.live) {
-        for (let j = 0; j < character.games.length; j++) {
-          const game = character.games[j]
-          await gamesService.getGameById(game)
-        }
+        const game = character.games[character.games.length - 1]
+        await gamesService.getGameById(game)
         AppState.activeCharacter = character
       }
     }

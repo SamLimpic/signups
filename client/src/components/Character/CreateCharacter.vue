@@ -43,7 +43,7 @@
           Choose Race
         </button>
         <div class="dropdown-menu dropdown-menu-right m-0 p-0 mb-2" aria-labelledby="dropdownMenuButton">
-          <CharacterDrop v-for="(r, index) in state.races" :key="index" :drop-prop="r" type-prop="Race" />
+          <CharacterDrop v-for="(r, index) in state.race" :key="index" :drop-prop="r" type-prop="Race" />
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
           Choose Class
         </button>
         <div class="dropdown-menu dropdown-menu-right m-0 p-0 mb-2" aria-labelledby="dropdownMenuButton">
-          <CharacterDrop v-for="(c, index) in state.classes" :key="index" :drop-prop="c" type-prop="Class" />
+          <CharacterDrop v-for="(c, index) in state.class" :key="index" :drop-prop="c" type-prop="Class" />
         </div>
       </div>
     </div>
@@ -92,8 +92,8 @@ export default {
   setup() {
     const state = reactive({
       account: computed(() => AppState.account),
-      races: computed(() => AppState.values.races),
-      classes: computed(() => AppState.values.classes),
+      race: computed(() => AppState.values.race),
+      class: computed(() => AppState.values.class),
       activeCharacter: computed(() => AppState.activeCharacter)
     })
     onMounted(async() => {

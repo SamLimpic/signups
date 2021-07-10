@@ -46,7 +46,6 @@ export class GamesController extends BaseController {
 
   async editGame(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id
       req.body.id = req.params.id
       const data = await gamesService.editGame(req.body)
       return res.send(data)
