@@ -34,6 +34,11 @@ main {
   opacity: .5;
 }
 
+.disable {
+  pointer-events: none;
+  cursor: none;
+}
+
 @media (min-width: 0) {
   .font-xs {
     font-size: .9rem;

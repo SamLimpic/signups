@@ -6,8 +6,22 @@
         <h3 class="font-sm m-0" v-if="liveProp && indexProp">
           [ Choice {{ indexProp }} ]
         </h3>
-        <h3 class="font-sm m-0" v-else-if="liveProp">
-          [ {{ state.activeCharacter.name }}: {{ state.activeCharacter.race }} {{ state.activeCharacter.class }} ]
+        <h3 class="font-md m-0 pl-lg-3 pl-sm-2 pl-2 ml-lg-3 ml-sm-3 ml-2 pb-sm-1" v-else-if="liveProp">
+          <div class="icon-overlay dropdown dropleft">
+            <button id="players"
+                    class="font-xl border-0 m-0 p-0"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+            >
+              <i class="fas fa-dice-d20 hoverable"></i>
+            </button>
+            <div class="dropdown-menu m-0 p-0 mx-3" aria-labelledby="dropdownMenuButton">
+              <CharacterDrop v-for="(c) in state.characters" :key="c.id" :drop-prop="c.name" :live-prop="!state.loading" />
+            </div>
+          </div>
+          <i>{{ state.activeCharacter.name }}</i>
         </h3>
         <h3 class="font-sm m-0" v-else>
           [ {{ gameProp.size }} Players ]
@@ -151,6 +165,13 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       }
+      // changeCharacter(character) {
+      //   try {
+      //     let game =
+      //   } catch (error) {
+      //     Notification.toast('Error: ' + error, 'error')
+      //   }
+      // }
     }
   },
   components: {}
@@ -186,6 +207,19 @@ export default {
 .dropdown-menu {
   pointer-events: none;
   min-width: 7rem;
+}
+.icon-overlay {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  z-index: 10;
+}
+.fa-dice-d20 {
+  transition: all .5s ease-in-out;
+  color: var(--warning) !important;
+}
+.icon-overlay:hover .fa-dice-d20 {
+  color: var(--success) !important;
 }
 @media (min-width: 0) {
 .cover {
