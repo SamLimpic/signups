@@ -5,7 +5,7 @@
       "name": "Client"
     },
     {
-      "path": "server",
+      "path": "signups",
       "name": "Server"
     }
   ],
