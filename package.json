@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "scripts": {
         "setup:app": "npm run setup:client && npm run setup:server",
-        "setup:client": "cd signups.client && npm i",
+        "setup:client": "cd client && npm i",
         "setup:server": "cd signups && npm i",
-        "start": "node signups.server/index.js"
+        "start": "node server/index.js"
     },
     "engines": {
         "node": "^14.17.0"
