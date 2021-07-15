@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "debug": "node index.js",
-    "prestart": "next build",
     "start": "node index.js",
     "dev": "node index.js",
     "setup": "npm install",
