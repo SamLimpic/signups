@@ -127,10 +127,10 @@ class GamesService {
         })
       }
     })
-    console.log(AppState.roster, AppState.count.check)
+    // console.log(AppState.roster, AppState.count.check)
     if (!AppState.built) {
-      console.log('REROLL')
-      console.log(AppState.choices, AppState.count)
+      // console.log('REROLL')
+      // console.log(AppState.choices, AppState.count)
       await this.buildRoster()
     } else {
       await this.updateRoster()
@@ -161,8 +161,8 @@ class GamesService {
       c.live = false
     })
     await this.pushRoster()
-    console.log('FINAL ROSTER')
-    console.log(AppState.choices, AppState.roster)
+    // console.log('FINAL ROSTER')
+    // console.log(AppState.choices, AppState.roster)
   }
 
   async pushRoster() {

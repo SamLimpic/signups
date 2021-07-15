@@ -5,9 +5,9 @@ import { router } from '../router'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { charactersService } from './CharactersService'
-import { gamesService } from './GamesService'
 import { socketService } from './SocketService'
-import { valuesService } from './ValuesService'
+// import { gamesService } from './GamesService'
+// import { valuesService } from './ValuesService'
 
 export const AuthService = initialize({
   domain,
