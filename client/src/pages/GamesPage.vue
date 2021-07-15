@@ -183,7 +183,6 @@ import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { gamesService } from '../services/GamesService'
 import Notification from '../utils/Notification'
-import { charactersService } from '../services/CharactersService'
 import { valuesService } from '../services/ValuesService'
 
 export default {
